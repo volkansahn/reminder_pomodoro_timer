@@ -4,5 +4,7 @@ class ThemeServices {
   final _box = GetStorage();
   final _key = 'isDarkMode';
 
-  bool _loadThemeFromBox() {}
+  bool _loadThemeFromBox() {
+    return false;
+  }
 }
