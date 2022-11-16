@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:get/get.dart';
+import 'package:reminder_pomodoro/services/notifications_service.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +13,19 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  var notifyHelper;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    //init notification plugin
+    notifyHelper = NotifyHelper();
+    //init notification
+    notifyHelper.initializeNotification();
+    notifyHelper.requestIOSPermissions();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,6 +46,12 @@ class _HomePageState extends State<HomePage> {
             ),
             onTap: () {
               ThemeServices().switchTheme();
+              notifyHelper.displayNotification(
+                  title: "Theme Change",
+                  body: Get.isDarkMode
+                      ? "Light Theme Loaded"
+                      : "Dark Theme Loaded");
+              notifyHelper.scheduledNotification();
             },
           ),
           SizedBox(width: 20),
