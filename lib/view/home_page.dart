@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:reminder_pomodoro/services/notifications_service.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
 
@@ -29,44 +31,49 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Column(
-          children: [
-            SizedBox(
-              width: 20,
-            ),
-            Text("Date"),
-          ],
-        ),
-        actions: [
-          GestureDetector(
-            child: Icon(
-              Icons.add,
-              size: 20.0,
-            ),
-            onTap: () {
-              ThemeServices().switchTheme();
-              notifyHelper.displayNotification(
-                  title: "Theme Change",
-                  body: Get.isDarkMode
-                      ? "Light Theme Loaded"
-                      : "Dark Theme Loaded");
-              notifyHelper.scheduledNotification();
-            },
-          ),
-          SizedBox(width: 20),
-        ],
-      ),
+      appBar: _customAppBar(context),
       body: Column(
         children: [
-          Text(
-            "Theme Data",
-            style: TextStyle(
-              fontSize: 38.0,
-            ),
+          Row(
+            children: [
+              Column(
+                children: [
+                  Text(
+                    DateFormat.yMMMMd().format(DateTime.now()),
+                    style: subHeadingStyle,
+                  )
+                ],
+              )
+            ],
           ),
         ],
       ),
+    );
+  }
+
+  AppBar _customAppBar(BuildContext context) {
+    return AppBar(
+      elevation: 0,
+      backgroundColor: context.theme.backgroundColor,
+      actions: [
+        GestureDetector(
+          child: Icon(
+            Icons.add,
+            size: 40.0,
+            color: Get.isDarkMode ? Colors.white : Colors.black,
+          ),
+          onTap: () {
+            ThemeServices().switchTheme();
+            notifyHelper.displayNotification(
+                title: "Theme Change",
+                body: Get.isDarkMode
+                    ? "Light Theme Loaded"
+                    : "Dark Theme Loaded");
+            notifyHelper.scheduledNotification();
+          },
+        ),
+        SizedBox(width: 20),
+      ],
     );
   }
 }
