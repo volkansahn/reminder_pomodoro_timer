@@ -23,3 +23,11 @@ TextStyle get subHeadingStyle {
     fontWeight: FontWeight.bold,
   ));
 }
+
+TextStyle get headingStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontSize: 30,
+    fontWeight: FontWeight.bold,
+  ));
+}

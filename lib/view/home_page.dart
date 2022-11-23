@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:reminder_pomodoro/services/notifications_service.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
+import 'package:reminder_pomodoro/view/widgets/button.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -34,17 +35,31 @@ class _HomePageState extends State<HomePage> {
       appBar: _customAppBar(context),
       body: Column(
         children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Text(
-                    DateFormat.yMMMMd().format(DateTime.now()),
-                    style: subHeadingStyle,
-                  )
-                ],
-              )
-            ],
+          _addBar(),
+        ],
+      ),
+    );
+  }
+
+  Container _addBar() {
+    return Container(
+      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            child: Column(
+              children: [
+                Text(
+                  DateFormat.yMMMMd().format(DateTime.now()),
+                  style: subHeadingStyle,
+                )
+              ],
+            ),
+          ),
+          myButton(
+            label: "+ Add",
+            onTap: null,
           ),
         ],
       ),
