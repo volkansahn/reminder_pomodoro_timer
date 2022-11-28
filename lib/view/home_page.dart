@@ -1,7 +1,9 @@
+import 'package:date_picker_timeline/date_picker_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:reminder_pomodoro/services/notifications_service.dart';
@@ -36,6 +38,23 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           _addBar(),
+          Container(
+            margin: EdgeInsets.only(top: 20.0, left: 20.0),
+            child: DatePicker(
+              DateTime.now(),
+              height: 100,
+              width: 80,
+              initialSelectedDate: DateTime.now(),
+              selectionColor: Colors.amber,
+              selectedTextColor: Colors.white,
+              dateTextStyle: GoogleFonts.lato(
+                textStyle: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.grey),
+              ),
+            ),
+          )
         ],
       ),
     );
