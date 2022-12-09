@@ -84,10 +84,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
     if (_pickedTime != null) {
       setState(() {
-        _reminderTime = _pickedTime.toString();
+        _reminderTime = _formatTimeOfDay(_pickedTime);
       });
     }
   }
+  
+  String _formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat.jm(); 
+    return format.format(dt);
+  }
+  
 }
 
 AppBar _customAppBar(BuildContext context) {
