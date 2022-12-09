@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const Color darkGrey = Color(0xFF121212);
@@ -29,5 +30,14 @@ TextStyle get headingStyle {
       textStyle: TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
+  ));
+}
+
+TextStyle get titleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w800,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
   ));
 }

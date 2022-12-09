@@ -8,6 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:reminder_pomodoro/services/notifications_service.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
+import 'package:reminder_pomodoro/view/add_task_page.dart';
 import 'package:reminder_pomodoro/view/widgets/button.dart';
 
 class HomePage extends StatefulWidget {
@@ -19,6 +20,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var notifyHelper;
+  DateTime _selectedDate = DateTime.now();
 
   @override
   void initState() {
@@ -36,26 +38,47 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: _customAppBar(context),
       body: Column(
-        children: [
-          _addBar(),
-          Container(
-            margin: EdgeInsets.only(top: 20.0, left: 20.0),
-            child: DatePicker(
-              DateTime.now(),
-              height: 100,
-              width: 80,
-              initialSelectedDate: DateTime.now(),
-              selectionColor: Colors.amber,
-              selectedTextColor: Colors.white,
-              dateTextStyle: GoogleFonts.lato(
-                textStyle: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey),
-              ),
-            ),
-          )
-        ],
+        children: [_addBar(), _addDateBar(), _addWaterReminder()],
+      ),
+    );
+  }
+
+  Container _addWaterReminder() {
+    return Container(
+      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
+      child: Text(
+        "Add Water Reminder",
+        style: headingStyle,
+      ),
+      color: Colors.amber,
+    );
+  }
+
+  Container _addDateBar() {
+    return Container(
+      margin: EdgeInsets.only(top: 20.0, left: 20.0),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 80,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: Colors.amber,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        dayTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: TextStyle(
+              fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.grey),
+        ),
+        onDateChange: (date) {
+          _selectedDate = date;
+        },
       ),
     );
   }
@@ -78,7 +101,9 @@ class _HomePageState extends State<HomePage> {
           ),
           myButton(
             label: "+ Add",
-            onTap: null,
+            onTap: (() {
+              Get.to(AddTaskPage());
+            }),
           ),
         ],
       ),
