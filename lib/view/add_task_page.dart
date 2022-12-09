@@ -15,7 +15,7 @@ class AddTaskPage extends StatefulWidget {
 
 class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
-  String _reminderTime = DateFormat.Hm().format(DateTime.now());
+  String _reminderTime = DateFormat.jm().format(DateTime.now());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
