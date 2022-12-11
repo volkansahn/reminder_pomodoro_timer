@@ -78,9 +78,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
     }
   }
 
-  _getTimeFromUser() {
+  _getTimeFromUser() async {
     var _pickedTime =
-        showTimePicker(context: context, initialTime: TimeOfDay.now());
+        await showTimePicker(context: context, initialTime: TimeOfDay.now());
 
     if (_pickedTime != null) {
       setState(() {
@@ -88,14 +88,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
       });
     }
   }
-  
+
   String _formatTimeOfDay(TimeOfDay tod) {
     final now = new DateTime.now();
     final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
-    final format = DateFormat.jm(); 
+    final format = DateFormat.jm();
     return format.format(dt);
   }
-  
 }
 
 AppBar _customAppBar(BuildContext context) {
