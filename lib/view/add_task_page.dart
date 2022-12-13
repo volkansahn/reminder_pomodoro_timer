@@ -16,6 +16,10 @@ class AddTaskPage extends StatefulWidget {
 class _AddTaskPageState extends State<AddTaskPage> {
   DateTime _selectedDate = DateTime.now();
   String _reminderTime = DateFormat.jm().format(DateTime.now());
+  String _remindBeforeTime = "None";
+  String _repeatTime = "None";
+  bool isRemindBefore = false;
+  bool isRepeat = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +59,137 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     _getTimeFromUser();
                   },
                 ),
-              )
+              ),
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("Remind Before"),
+                      Switch(
+                        // This bool value toggles the switch.
+                        value: isRemindBefore,
+                        activeColor: Colors.green,
+                        onChanged: (bool value) {
+                          // This is called when the user toggles the switch.
+                          setState(() {
+                            isRemindBefore = value;
+                          });
+                        },
+                      ),
+                    ]),
+              ),
+              if (!isRemindBefore) ...[
+                Container(),
+              ] else ...[
+                CircularDropDownMenu(
+                  dropDownMenuItem: [
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("5 min"),
+                      ),
+                      value: "5 min",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("10 min"),
+                      ),
+                      value: "10 min",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("15 min"),
+                      ),
+                      value: "15 min",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("30 min"),
+                      ),
+                      value: "30 min",
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _remindBeforeTime = value;
+                    });
+                  },
+                  hintText: _remindBeforeTime,
+                ),
+              ],
+              Container(
+                margin: EdgeInsets.only(top: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("Repeat"),
+                    Switch(
+                      // This bool value toggles the switch.
+                      value: isRepeat,
+                      activeColor: Colors.green,
+                      onChanged: (bool value) {
+                        // This is called when the user toggles the switch.
+                        setState(() {
+                          isRepeat = value;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              if (!isRepeat) ...[
+                Container(),
+              ] else ...[
+                CircularDropDownMenu(
+                  dropDownMenuItem: [
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("None"),
+                      ),
+                      value: "None",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("Every Hour"),
+                      ),
+                      value: "Every Hour",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("Every Week"),
+                      ),
+                      value: "Every Week",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("Every Month"),
+                      ),
+                      value: "Every Month",
+                    ),
+                    DropdownMenuItem(
+                      child: GestureDetector(
+                        onTap: () {},
+                        child: Text("Every Year"),
+                      ),
+                      value: "Every Year",
+                    ),
+                  ],
+                  onChanged: (value) {
+                    setState(() {
+                      _repeatTime = value;
+                    });
+                  },
+                  hintText: _repeatTime,
+                ),
+              ],
             ],
           ),
         ),
