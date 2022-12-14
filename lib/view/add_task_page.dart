@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
+import 'package:reminder_pomodoro/view/widgets/circular_drop_down.dart';
 import 'package:reminder_pomodoro/view/widgets/input_field.dart';
 
 class AddTaskPage extends StatefulWidget {
@@ -35,9 +36,14 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Reminder",
                 style: headingStyle,
               ),
-              InputField(title: "Title", hint: "Add Title to Reminder"),
-              InputField(title: "Reminder", hint: "Add Reminder"),
               InputField(
+                  isEditable: true,
+                  title: "Title",
+                  hint: "Add Title to Reminder"),
+              InputField(
+                  isEditable: true, title: "Reminder", hint: "Add Reminder"),
+              InputField(
+                isEditable: false,
                 onTap: (() {
                   _getDateFromUser(context);
                 }),
@@ -51,6 +57,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 ),
               ),
               InputField(
+                isEditable: false,
+                onTap: () {
+                  _getTimeFromUser();
+                },
                 title: "Time",
                 hint: _reminderTime,
                 widget: IconButton(
@@ -65,7 +75,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("Remind Before"),
+                      Text(
+                        "Remind Before",
+                        style: titleStyle,
+                      ),
                       Switch(
                         // This bool value toggles the switch.
                         value: isRemindBefore,
@@ -126,7 +139,10 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Repeat"),
+                    Text(
+                      "Repeat",
+                      style: titleStyle,
+                    ),
                     Switch(
                       // This bool value toggles the switch.
                       value: isRepeat,
@@ -190,6 +206,15 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   hintText: _repeatTime,
                 ),
               ],
+              InputField(
+                isEditable: true,
+                title: "Label",
+                hint: "Add Label",
+                widget: IconButton(
+                  icon: CircleAvatar(radius: 12, backgroundColor: Colors.blue),
+                  onPressed: () {},
+                ),
+              ),
             ],
           ),
         ),

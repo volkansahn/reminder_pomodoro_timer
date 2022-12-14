@@ -5,16 +5,18 @@ import 'package:flutter/src/widgets/framework.dart';
 import '../../helpers/theme.dart';
 
 class InputField extends StatefulWidget {
-  const InputField(
+  InputField(
       {super.key,
       required this.title,
       required this.hint,
       this.widget,
-      this.onTap});
+      this.onTap,
+      required this.isEditable});
   final String title;
   final String hint;
   final Widget? widget;
   final Function()? onTap;
+  final bool isEditable;
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -37,7 +39,7 @@ class _InputFieldState extends State<InputField> {
             child: Row(
               children: [
                 Expanded(
-                  child: widget.widget == null
+                  child: widget.isEditable == true
                       ? TextField(
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
