@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
@@ -21,6 +22,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   String _repeatTime = "None";
   bool isRemindBefore = false;
   bool isRepeat = false;
+  Color mycolor = Colors.blue;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -211,8 +214,36 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 title: "Label",
                 hint: "Add Label",
                 widget: IconButton(
-                  icon: CircleAvatar(radius: 12, backgroundColor: Colors.blue),
-                  onPressed: () {},
+                  icon: CircleAvatar(radius: 12, backgroundColor: mycolor),
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Pick a color!'),
+                            content: SingleChildScrollView(
+                              child: BlockPicker(
+                                pickerColor: mycolor, //default color
+                                onColorChanged: (Color color) {
+                                  //on color picked
+                                  setState(() {
+                                    mycolor = color;
+                                  });
+                                },
+                              ),
+                            ),
+                            actions: <Widget>[
+                              ElevatedButton(
+                                child: const Text('DONE'),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pop(); //dismiss the color picker
+                                },
+                              ),
+                            ],
+                          );
+                        });
+                  },
                 ),
               ),
             ],
