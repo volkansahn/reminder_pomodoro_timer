@@ -37,6 +37,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _customAppBar(context),
+      backgroundColor: context.theme.backgroundColor,
       body: Column(
         children: [_addBar(), _addDateBar(), _addWaterReminder()],
       ),
