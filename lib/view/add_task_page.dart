@@ -246,6 +246,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
+              MyButton(title: "Add Reminder", onTap:(){}),
             ],
           ),
         ),
