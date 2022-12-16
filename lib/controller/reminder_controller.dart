@@ -1,11 +1,15 @@
-  class ReminderController extends GetxController{
-  
-    @override
-    void onReady(){
-      super.onReady();
-    }
+import 'package:get/get.dart';
 
-    Future<int> addReminder({Reminder? reminder}) async{
-      return await DBHelper.insert(reminder);
-    }
+import '../helpers/db_helper.dart';
+import '../models/reminder_model.dart';
+
+class ReminderController extends GetxController {
+  @override
+  void onReady() {
+    super.onReady();
   }
+
+  Future<int> addReminder({Reminder? reminder}) async {
+    return await DBHelper.insert(reminder);
+  }
+}

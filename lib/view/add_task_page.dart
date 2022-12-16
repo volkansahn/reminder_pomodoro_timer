@@ -304,19 +304,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _addRemindertoDB() async {
-    /*
-    await _reminderController.addReminder( 
+    await _reminderController.addReminder(
       reminder: Reminder(
         title: _titleController.text,
-        reminder: _reminderTextController.text
-        date:
-        time:
-        remindBefore:
-        repeat:
-        color: mycolor,
+        reminder: _reminderTextController.text,
+        date: DateFormat.yMd().format(_selectedDate),
+        time: _reminderTime,
+        remindBefore: _remindBeforeTime,
+        repeat: _repeatTime,
+        color: mycolor.value,
         isReminded: 0,
-      );
-      */
+      ),
+    );
   }
 }
 
