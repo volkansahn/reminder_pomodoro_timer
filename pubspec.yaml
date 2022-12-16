@@ -44,6 +44,7 @@ dependencies:
   flutter_local_notifications:
   flutter_native_timezone:
   flutter_colorpicker: ^1.0.3
+  sqflite: 
 
 dev_dependencies:
   flutter_test:
