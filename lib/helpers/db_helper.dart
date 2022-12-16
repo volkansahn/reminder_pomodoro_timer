@@ -27,9 +27,9 @@ class DBHelper{
       print(e);
     }
   }
-  static Future<void> insert(Reminder reminder) aysnc{
+  static Future<void> insert(Reminder? reminder) aysnc{
     print("insert function called");
-    return await _db.isert(_tableName, reminder.toJson());
+    return await _db?.insert(_tableName, reminder!.toJson())??1;
   
   }
 }
