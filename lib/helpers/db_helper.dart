@@ -23,7 +23,7 @@ class DBHelper {
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "title STRING, reminder TEXT, date STRING, "
             "time STRING, remindBefore STRING, repeat STRING, "
-            "color STRING, isReminded STRING )",
+            "color STRING, isReminded STRING, label STRING )",
           );
         },
       );

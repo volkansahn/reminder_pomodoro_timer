@@ -6,6 +6,7 @@ class Reminder {
   String? time;
   String? remindBefore;
   String? repeat;
+  String? label;
   int? color;
   int? isReminded;
 
@@ -17,6 +18,7 @@ class Reminder {
     this.time,
     this.remindBefore,
     this.repeat,
+    this.label,
     this.color,
     this.isReminded,
   });
@@ -29,6 +31,7 @@ class Reminder {
     time = json['time'];
     remindBefore = json['remindBefore'];
     repeat = json['repeat'];
+    label = json['label'];
     color = json['color'];
     isReminded = json['isReminded'];
   }
@@ -42,6 +45,7 @@ class Reminder {
     data['time'] = this.time;
     data['remindBefore'] = this.remindBefore;
     data['repeat'] = this.repeat;
+    data['label'] = this.label;
     data['color'] = this.color;
     data['isReminded'] = this.isReminded;
     return data;

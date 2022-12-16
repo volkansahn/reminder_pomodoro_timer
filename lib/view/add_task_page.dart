@@ -23,6 +23,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final ReminderController _reminderController = Get.put(ReminderController());
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _reminderTextController = TextEditingController();
+  final TextEditingController _labelController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
@@ -225,6 +226,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 isEditable: true,
                 title: "Label",
                 hint: "Add Label",
+                controller: _labelController,
                 widget: IconButton(
                   icon: CircleAvatar(radius: 12, backgroundColor: mycolor),
                   onPressed: () {
@@ -312,6 +314,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         time: _reminderTime,
         remindBefore: _remindBeforeTime,
         repeat: _repeatTime,
+        label: _labelController.text,
         color: mycolor.value,
         isReminded: 0,
       ),
