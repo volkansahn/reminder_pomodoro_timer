@@ -5,8 +5,12 @@ import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
+import 'package:reminder_pomodoro/view/widgets/button.dart';
 import 'package:reminder_pomodoro/view/widgets/circular_drop_down.dart';
 import 'package:reminder_pomodoro/view/widgets/input_field.dart';
+
+import '../controller/reminder_controller.dart';
+import '../models/reminder_model.dart';
 
 class AddTaskPage extends StatefulWidget {
   const AddTaskPage({super.key});
@@ -16,9 +20,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
-  final ReminderController _reminderController = Get.put(Remindercontroller());
-  final TextEdittingController _titleController = TextEdittingController();
-  final TextEdittingController _reminderTextController = TextEdittingController();
+  final ReminderController _reminderController = Get.put(ReminderController());
+  final TextEditingController _titleController = TextEditingController();
+  final TextEditingController _reminderTextController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
@@ -43,12 +47,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 style: headingStyle,
               ),
               InputField(
-                  isEditable: true,
-                  title: "Title",
-                  hint: "Add Title to Reminder"),
-                  controller: _titleController,
+                isEditable: true,
+                title: "Title",
+                hint: "Add Title to Reminder",
+                controller: _titleController,
+              ),
               InputField(
-                  isEditable: true, title: "Reminder", hint: "Add Reminder", controller: _reminderTextController),
+                  isEditable: true,
+                  title: "Reminder",
+                  hint: "Add Reminder",
+                  controller: _reminderTextController),
               InputField(
                 isEditable: false,
                 onTap: (() {
@@ -250,9 +258,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
-              MyButton(title: "Add Reminder", onTap:(){
-                _addRemindertoDB();
-              }),
+              myButton(
+                  label: "Add Reminder",
+                  onTap: () {
+                    _addRemindertoDB();
+                  }),
             ],
           ),
         ),
@@ -292,7 +302,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
     final format = DateFormat.jm();
     return format.format(dt);
   }
-  _addRemindertoDB() async{
+
+  _addRemindertoDB() async {
+    /*
     await _reminderController.addReminder( 
       reminder: Reminder(
         title: _titleController.text,
@@ -304,6 +316,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
         color: mycolor,
         isReminded: 0,
       );
+      */
+  }
 }
 
 AppBar _customAppBar(BuildContext context) {

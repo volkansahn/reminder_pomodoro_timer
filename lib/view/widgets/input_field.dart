@@ -11,14 +11,14 @@ class InputField extends StatefulWidget {
       required this.hint,
       this.widget,
       this.onTap,
-       this.controller
+      this.controller,
       required this.isEditable});
   final String title;
   final String hint;
   final Widget? widget;
   final Function()? onTap;
   final bool isEditable;
-  final TextEdittingController? controller;
+  final TextEditingController? controller;
 
   @override
   State<InputField> createState() => _InputFieldState();
@@ -43,7 +43,7 @@ class _InputFieldState extends State<InputField> {
                 Expanded(
                   child: widget.isEditable == true
                       ? TextField(
-                          controller: _controller,
+                          controller: widget.controller,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12.0),
@@ -54,7 +54,7 @@ class _InputFieldState extends State<InputField> {
                       : TextField(
                           onTap: widget.onTap,
                           readOnly: true,
-                          controller: _controller,
+                          controller: widget.controller,
                           decoration: InputDecoration(
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12.0),

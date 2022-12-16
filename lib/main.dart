@@ -5,6 +5,8 @@ import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
 import 'package:reminder_pomodoro/view/home_page.dart';
 
+import 'helpers/db_helper.dart';
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DBHelper.initDb();

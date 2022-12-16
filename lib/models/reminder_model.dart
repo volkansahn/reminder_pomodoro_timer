@@ -1,4 +1,4 @@
-class Reminder{
+class Reminder {
   int? id;
   String? title;
   String? reminder;
@@ -8,31 +8,31 @@ class Reminder{
   String? repeat;
   int? color;
   int? isReminded;
-  
+
   Reminder({
-    this.id;
-    this.title;
-    this.reminder;
-    this.date;
-    this.time;
-    this.remindBefore;
-    this.repeat;
-    this.color;
-    this.isReminded;
+    this.id,
+    this.title,
+    this.reminder,
+    this.date,
+    this.time,
+    this.remindBefore,
+    this.repeat,
+    this.color,
+    this.isReminded,
   });
-  
-  Reminder.fromJson(Map<String, dynamic> json){
+
+  Reminder.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     reminder = json['reminder'];
-    date = ['date'];
+    date = json['date'];
     time = json['time'];
     remindBefore = json['remindBefore'];
     repeat = json['repeat'];
     color = json['color'];
     isReminded = json['isReminded'];
   }
-                    
+
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['id'] = this.id;
@@ -46,5 +46,4 @@ class Reminder{
     data['isReminded'] = this.isReminded;
     return data;
   }
-                    
 }
