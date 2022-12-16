@@ -292,8 +292,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
     final format = DateFormat.jm();
     return format.format(dt);
   }
-  _addRemindertoDB(){
-    _reminderController.addReminder( 
+  _addRemindertoDB() async{
+    await _reminderController.addReminder( 
       reminder: Reminder(
         title: _titleController.text,
         reminder: _reminderTextController.text
