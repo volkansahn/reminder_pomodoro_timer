@@ -16,6 +16,9 @@ class AddTaskPage extends StatefulWidget {
 }
 
 class _AddTaskPageState extends State<AddTaskPage> {
+  final ReminderController _reminderController = Get.put(Remindercontroller());
+  final TextEdittingController _titleController = TextEdittingController();
+  final TextEdittingController _reminderTextController = TextEdittingController();
   DateTime _selectedDate = DateTime.now();
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
@@ -43,8 +46,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   isEditable: true,
                   title: "Title",
                   hint: "Add Title to Reminder"),
+                  controller: _titleController,
               InputField(
-                  isEditable: true, title: "Reminder", hint: "Add Reminder"),
+                  isEditable: true, title: "Reminder", hint: "Add Reminder", controller: _reminderTextController),
               InputField(
                 isEditable: false,
                 onTap: (() {
@@ -246,7 +250,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
-              MyButton(title: "Add Reminder", onTap:(){}),
+              MyButton(title: "Add Reminder", onTap:(){
+                _addRemindertoDB();
+              }),
             ],
           ),
         ),
@@ -286,6 +292,18 @@ class _AddTaskPageState extends State<AddTaskPage> {
     final format = DateFormat.jm();
     return format.format(dt);
   }
+  _addRemindertoDB(){
+    _reminderController.addReminder( 
+      reminder: Reminder(
+        title: _titleController.text,
+        reminder: _reminderTextController.text
+        date:
+        time:
+        remindBefore:
+        repeat:
+        color: mycolor,
+        isReminded: 0,
+      );
 }
 
 AppBar _customAppBar(BuildContext context) {
