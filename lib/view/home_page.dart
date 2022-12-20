@@ -49,23 +49,28 @@ class _HomePageState extends State<HomePage> {
     return Expanded(
       child: Obx((){
         return Listview.builder(
-          itemCount: _reminderController.reminderList.length,  
+          itemCount: _reminderController.reminderList.length,
+          
           itemBuilder: (_, index){
-            return GestureDetector(
-              onTap: (){
-                _remindercontroller.delete(_reminderController.reminderList[index]);
-                _reminderController.getReminders();
-              }
-              child: Container(
-                margin: EdgeInsets.only(bottom: 10),
-                width: 100,
-                height: 50,
-                color: Colors.green,
-                child: Text(
-                  _reminderController.reminderList[index].title.toString(),
+            return AnimationConfiguration.staggeredList(
+              position: index,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Row(
+                    children:[
+                      GestureDetector(
+                        onTap: (){
+                          print("Tapped"),
+                        }
+                        child: RemindTile(_reminderController.reminderList[index]),
+                      ),
+                    ]
+                  ),
                 ),
-            ),
-           );
+              ),
+            );
           });
       }),
     );
