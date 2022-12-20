@@ -1,6 +1,6 @@
-class TaskTile extends StatelessWidget {
-  final Task? task;
-  TaskTile(this.task);
+class ReminderTile extends StatelessWidget {
+  final Reminder? reminder;
+  TaskTile(this.reminder);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +21,7 @@ class TaskTile extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  task?.title ?? "",
+                  reminder?.title ?? "",
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(
                         fontSize: 16,
@@ -42,7 +42,7 @@ class TaskTile extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      "${task!.startTime} - ${task!.endTime}",
+                      "${reminder!.startTime}",
                       style: GoogleFonts.lato(
                         textStyle:
                             TextStyle(fontSize: 13, color: Colors.grey[100]),
@@ -52,7 +52,7 @@ class TaskTile extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  task?.note ?? "",
+                  reminder?.note ?? "",
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
                   ),
