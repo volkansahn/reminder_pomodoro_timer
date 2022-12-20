@@ -21,7 +21,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var notifyHelper;
   DateTime _selectedDate = DateTime.now();
-
+  final _reminderController = Get.put(ReminderController());
+  
   @override
   void initState() {
     // TODO: implement initState
@@ -39,11 +40,28 @@ class _HomePageState extends State<HomePage> {
       appBar: _customAppBar(context),
       backgroundColor: context.theme.backgroundColor,
       body: Column(
-        children: [_addBar(), _addDateBar(), _addWaterReminder()],
+        children: [_addBar(), _addDateBar(), _addWaterReminder(), _showReminders()],
       ),
     );
   }
 
+   _showReminders(){
+    return Expanded(
+      child: Obx((){
+        return Listview.builder(
+          itemCount: _reminderController.reminderList.length,  
+          itemBuilder: (_, context){
+            return Container(
+              margin: EdgeInsets.only(bottom: 10),
+              width: 100,
+              height: 50,
+              color: Colors.green,
+            );
+          });
+      }),
+    );
+   }
+     
   Container _addWaterReminder() {
     return Container(
       margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
