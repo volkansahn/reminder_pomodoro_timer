@@ -51,15 +51,21 @@ class _HomePageState extends State<HomePage> {
         return Listview.builder(
           itemCount: _reminderController.reminderList.length,  
           itemBuilder: (_, index){
-            return Container(
-              margin: EdgeInsets.only(bottom: 10),
-              width: 100,
-              height: 50,
-              color: Colors.green,
-              child: Text(
-                _reminderController.reminderList[index].title.toString(),
-              )
-            );
+            return GestureDetector(
+              onTap: (){
+                _remindercontroller.delete(_reminderController.reminderList[index]);
+                _reminderController.getReminders();
+              }
+              child: Container(
+                margin: EdgeInsets.only(bottom: 10),
+                width: 100,
+                height: 50,
+                color: Colors.green,
+                child: Text(
+                  _reminderController.reminderList[index].title.toString(),
+                ),
+            ),
+           );
           });
       }),
     );
