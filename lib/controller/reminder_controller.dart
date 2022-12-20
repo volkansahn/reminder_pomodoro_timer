@@ -18,6 +18,9 @@ class ReminderController extends GetxController {
   Future<int> getReminder({Reminder? reminder}) async {
     List<Map<String, dynamic>> reminders = await DbHelper.query();
     reminderlist.assignAll(reminders.map(data)) => new Reminder.fromJson(data)).toList();
-
+  }
+  
+  void delete(Reminder reminder){
+    DBHelper.delete(reminder);
   }
 }
