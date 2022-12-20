@@ -12,7 +12,7 @@ class DBHelper {
       return;
     }
     try {
-      String _path = await getDatabasesPath() + 'reminder.db';
+      String _path = await getDatabasesPath() + 'reminders.db';
       _db = await openDatabase(
         _path,
         version: _version,
@@ -35,5 +35,10 @@ class DBHelper {
   static Future<int> insert(Reminder? reminder) async {
     print("insert function called");
     return await _db?.insert(_tableName, reminder!.toJson()) ?? 1;
+  }
+  
+  static Future<List<Map<String, dynamic>>> query() async {
+    print("query function called");
+    return await _db.query(_tableName);
   }
 }
