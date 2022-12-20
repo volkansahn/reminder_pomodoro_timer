@@ -40,7 +40,7 @@ class _HomePageState extends State<HomePage> {
       appBar: _customAppBar(context),
       backgroundColor: context.theme.backgroundColor,
       body: Column(
-        children: [_addBar(), _addDateBar(), _addWaterReminder(), _showReminders()],
+        children: [_addBar(), _addDateBar(), _addWaterReminder(), sizeBox(height:10), _showReminders()],
       ),
     );
   }
@@ -50,12 +50,15 @@ class _HomePageState extends State<HomePage> {
       child: Obx((){
         return Listview.builder(
           itemCount: _reminderController.reminderList.length,  
-          itemBuilder: (_, context){
+          itemBuilder: (_, index){
             return Container(
               margin: EdgeInsets.only(bottom: 10),
               width: 100,
               height: 50,
               color: Colors.green,
+              child: Text(
+                _reminderController.reminderList[index].title.toString(),
+              )
             );
           });
       }),
@@ -120,8 +123,9 @@ class _HomePageState extends State<HomePage> {
           ),
           myButton(
             label: "+ Add",
-            onTap: (() {
-              Get.to(AddTaskPage());
+            onTap: () async{
+              await Get.to(() => AddTaskPage());
+              _reminderController.getReminders();
             }),
           ),
         ],
