@@ -13,7 +13,7 @@ class ReminderTile extends StatelessWidget {
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: _getBGClr(task?.color ?? 0),
+          color: _getBGClr(reminder?.color ?? 0),
         ),
         child: Row(children: [
           Expanded(
@@ -42,7 +42,7 @@ class ReminderTile extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      "${reminder!.startTime}",
+                      "${reminder!.time}",
                       style: GoogleFonts.lato(
                         textStyle:
                             TextStyle(fontSize: 13, color: Colors.grey[100]),
@@ -52,7 +52,7 @@ class ReminderTile extends StatelessWidget {
                 ),
                 SizedBox(height: 12),
                 Text(
-                  reminder?.note ?? "",
+                  reminder?.reminder ?? "",
                   style: GoogleFonts.lato(
                     textStyle: TextStyle(fontSize: 15, color: Colors.grey[100]),
                   ),
@@ -69,7 +69,7 @@ class ReminderTile extends StatelessWidget {
           RotatedBox(
             quarterTurns: 3,
             child: Text(
-              task!.isCompleted == 1 ? "COMPLETED" : "TODO",
+              reminder!.isCompleted == 1 ? "COMPLETED" : "TODO",
               style: GoogleFonts.lato(
                 textStyle: TextStyle(
                     fontSize: 10,
