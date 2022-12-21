@@ -50,27 +50,60 @@ class _HomePageState extends State<HomePage> {
       child: Obx((){
         return Listview.builder(
           itemCount: _reminderController.reminderList.length,
-          
+
           itemBuilder: (_, index){
-            return AnimationConfiguration.staggeredList(
-              position: index,
-              duration: const Duration(milliseconds: 375),
-              child: SlideAnimation(
-                verticalOffset: 50.0,
-                child: FadeInAnimation(
-                  child: Row(
-                    children:[
-                      GestureDetector(
-                        onTap: (){
-                          print("Tapped"),
-                        }
-                        child: RemindTile(_reminderController.reminderList[index]),
-                      ),
-                    ]
+            Reminder reminder = __reminderController.reminderList[index];
+            if (reminder.repeat == 'Daily'){
+                DateTime date = DateFormat.jm().parse(reminder.time.toString());
+              var myTime = DateFormat("HH:mm").format(date);
+              notifyHelper.scheduledNotification(
+                int.parse(myTime.toString().split(":")[0]),
+                int.parse(myTime.toString().split(":")[1]),
+                reminder
+              );
+                return AnimationConfiguration.staggeredList(
+                position: index,
+                duration: const Duration(milliseconds: 375),
+                child: SlideAnimation(
+                  verticalOffset: 50.0,
+                  child: FadeInAnimation(
+                    child: Row(
+                      children:[
+                        GestureDetector(
+                          onTap: (){
+                            print("Tapped"),
+                          }
+                          child: RemindTile(_reminderController.reminderList[index]),
+                        ),
+                      ]
+                    ),
                   ),
                 ),
-              ),
-            );
+              );
+            }
+            if(task.date==DateFormat.yMd().format(_selectedDate)){
+              return AnimationConfiguration.staggeredList(
+                  position: index,
+                  duration: const Duration(milliseconds: 375),
+                  child: SlideAnimation(
+                    verticalOffset: 50.0,
+                    child: FadeInAnimation(
+                      child: Row(
+                        children:[
+                          GestureDetector(
+                            onTap: (){
+                              print("Tapped"),
+                            }
+                            child: RemindTile(_reminderController.reminderList[index]),
+                          ),
+                        ]
+                      ),
+                    ),
+                  ),
+                );
+            }else{
+              return Container();
+            }
           });
       }),
     );
@@ -110,7 +143,9 @@ class _HomePageState extends State<HomePage> {
               fontSize: 14.0, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         onDateChange: (date) {
-          _selectedDate = date;
+          setState((){
+            _selectedDate = date;
+          });
         },
       ),
     );
@@ -162,7 +197,7 @@ class _HomePageState extends State<HomePage> {
                 body: Get.isDarkMode
                     ? "Light Theme Loaded"
                     : "Dark Theme Loaded");
-            notifyHelper.scheduledNotification();
+            //notifyHelper.scheduledNotification();
           },
         ),
         SizedBox(width: 20),
