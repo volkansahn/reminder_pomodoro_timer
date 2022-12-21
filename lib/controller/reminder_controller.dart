@@ -23,4 +23,8 @@ class ReminderController extends GetxController {
   void delete(Reminder reminder){
     DBHelper.delete(reminder);
   }
+  
+  void markTaskCompleted(int id){
+    await DBHelper.update(id);
+  }
 }
