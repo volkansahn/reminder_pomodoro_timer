@@ -153,9 +153,9 @@ class NotifyHelper {
   scheduledNotification(int hour, int minutes, Reminder reminder) async {
     int newTime = minutes;
     await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        'scheduled title',
-        'theme changes 5 seconds ago',
+        reminder.id!.toInt(),
+        reminder.title,
+        reminder.reminder,
         _convertTime(hour, minutes),
         // Notif after 5 sec.
         //tz.TZDateTime.now(tz.local).add(const Duration(seconds: 5)),
