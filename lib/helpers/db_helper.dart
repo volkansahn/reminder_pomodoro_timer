@@ -45,4 +45,12 @@ class DBHelper {
   static delete(Reminder reminder) async{
     await _db!.delete(_tableName, where:'id=?' whereArags: [reminder.id]);
   }
+  
+  static update(int id) async{
+    return await _db!.rawUpdate ('''
+    UPDATE reminders
+    SET isCompleted = ?
+    WHERE id =?
+    ''', [1, id]);
+  }
 }
