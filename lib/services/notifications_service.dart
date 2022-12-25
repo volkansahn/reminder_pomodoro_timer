@@ -8,6 +8,8 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:timezone/data/latest.dart' as tz;
 import 'package:timezone/timezone.dart' as tz;
 
+import '../models/reminder_model.dart';
+
 class NotifyHelper {
   final StreamController<String?> selectNotificationStream =
       StreamController<String?>.broadcast();
@@ -112,12 +114,12 @@ class NotifyHelper {
     );
   }
 
-  Future<void> _configureLocalTimezone() async{
+  Future<void> _configureLocalTimezone() async {
     tz.initializeTimeZones();
-    final String timeZone = await flutterNativeTimezone.getLocalTimezone();
-    tz.setlocation(tz.getlocation(timeZone));
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.setLocalLocation(tz.getLocation(timeZone));
   }
-  
+
   // Request Notif permission
   void requestIOSPermissions() {
     flutterLocalNotificationsPlugin
@@ -168,12 +170,13 @@ class NotifyHelper {
             UILocalNotificationDateInterpretation.absoluteTime,
         matchDateTimeComponents: DateTimeComponents.time);
   }
-  
-  tz.TZDateTime _convertTime(int hour, int minutes){
+
+  tz.TZDateTime _convertTime(int hour, int minutes) {
     final tz.TZDateTime now = tz.TZDateTime.now(tz.local);
-    tz.TZDateTime scheduledDate = tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
-    if(scheduledDate.isBefore(now)){
-      scheduledDate = scheduledDate.add(const Duration(days:1));
+    tz.TZDateTime scheduledDate =
+        tz.TZDateTime(tz.local, now.year, now.month, now.day, hour, minutes);
+    if (scheduledDate.isBefore(now)) {
+      scheduledDate = scheduledDate.add(const Duration(days: 1));
     }
     return scheduledDate;
   }

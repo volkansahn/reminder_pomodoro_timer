@@ -36,18 +36,18 @@ class DBHelper {
     print("insert function called");
     return await _db?.insert(_tableName, reminder!.toJson()) ?? 1;
   }
-  
+
   static Future<List<Map<String, dynamic>>> query() async {
     print("query function called");
-    return await _db.query(_tableName);
+    return await _db!.query(_tableName);
   }
-  
-  static delete(Reminder reminder) async{
-    await _db!.delete(_tableName, where:'id=?' whereArags: [reminder.id]);
+
+  static delete(Reminder reminder) async {
+    await _db!.delete(_tableName, where: 'id=?', whereArgs: [reminder.id]);
   }
-  
-  static update(int id) async{
-    return await _db!.rawUpdate ('''
+
+  static update(int id) async {
+    return await _db!.rawUpdate('''
     UPDATE reminders
     SET isCompleted = ?
     WHERE id =?

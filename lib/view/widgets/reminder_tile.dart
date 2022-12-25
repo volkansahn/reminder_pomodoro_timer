@@ -1,6 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+
+import '../../models/reminder_model.dart';
+
 class ReminderTile extends StatelessWidget {
   final Reminder? reminder;
-  TaskTile(this.reminder);
+  ReminderTile(this.reminder);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +18,7 @@ class ReminderTile extends StatelessWidget {
         //  width: SizeConfig.screenWidth * 0.78,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          color: _getBGClr(reminder?.color ?? 0),
+          color: Colors.amber, //_getBGClr(reminder?.color ?? 0),
         ),
         child: Row(children: [
           Expanded(
@@ -69,7 +74,8 @@ class ReminderTile extends StatelessWidget {
           RotatedBox(
             quarterTurns: 3,
             child: Text(
-              reminder!.isCompleted == 1 ? "COMPLETED" : "TODO",
+              "Hello",
+              //reminder!.isCompleted == 1 ? "COMPLETED" : "TODO",
               style: GoogleFonts.lato(
                 textStyle: TextStyle(
                     fontSize: 10,
@@ -83,6 +89,7 @@ class ReminderTile extends StatelessWidget {
     );
   }
 
+  /*
   _getBGClr(int no) {
     switch (no) {
       case 0:
@@ -95,4 +102,5 @@ class ReminderTile extends StatelessWidget {
         return bluishClr;
     }
   }
+  */
 }

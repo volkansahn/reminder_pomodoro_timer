@@ -45,7 +45,10 @@ dependencies:
   flutter_native_timezone:
   flutter_colorpicker: ^1.0.3
   sqflite:
-  fluter_staggered_animations:
+  flutter_staggered_animations: ^1.1.1
+  group_button: ^5.2.2
+
+
 
 dev_dependencies:
   flutter_test:

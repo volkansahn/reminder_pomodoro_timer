@@ -8,23 +8,23 @@ class ReminderController extends GetxController {
   void onReady() {
     super.onReady();
   }
-  
+
   var reminderList = <Reminder>[].obs;
 
   Future<int> addReminder({Reminder? reminder}) async {
     return await DBHelper.insert(reminder);
   }
-  
-  Future<int> getReminder({Reminder? reminder}) async {
-    List<Map<String, dynamic>> reminders = await DbHelper.query();
-    reminderlist.assignAll(reminders.map(data)) => new Reminder.fromJson(data)).toList();
+
+  void getReminders() async {
+    List<Map<String, dynamic>> reminders = await DBHelper.query();
+    reminderList.assignAll(reminders.map((e) => Reminder.fromJson(e)));
   }
-  
-  void delete(Reminder reminder){
+
+  void delete(Reminder reminder) {
     DBHelper.delete(reminder);
   }
-  
-  void markTaskCompleted(int id){
+
+  Future<void> markTaskCompleted(int id) async {
     await DBHelper.update(id);
   }
 }
