@@ -16,6 +16,7 @@ import 'package:reminder_pomodoro/view/widgets/reminder_tile.dart';
 
 import '../controller/reminder_controller.dart';
 import '../models/reminder_model.dart';
+import '../models/water_reminder_model.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +29,7 @@ class _HomePageState extends State<HomePage> {
   var notifyHelper;
   DateTime _selectedDate = DateTime.now();
   final _reminderController = Get.put(ReminderController());
-
+  var isWaterReminderAdded = false;
   @override
   void initState() {
     // TODO: implement initState
@@ -38,6 +39,14 @@ class _HomePageState extends State<HomePage> {
     //init notification
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
+
+    //WaterReminder waterReminder = _reminderController.waterReminderList[1];
+    /*
+    if (waterReminder != null) {
+      isWaterReminderAdded = true;
+    }
+    print(isWaterReminderAdded);
+    print(waterReminder.goal);*/
   }
 
   @override
@@ -120,14 +129,25 @@ class _HomePageState extends State<HomePage> {
   Container _addWaterReminder() {
     return Container(
       margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
-      child: GestureDetector(
-        onTap: () => Get.to(AddWaterReminder()),
-        child: Text(
-          "Add Water Reminder",
-          style: headingStyle,
-        ),
+      child: Builder(
+        builder: (context) {
+          return isWaterReminderAdded
+              ? Container(
+                  color: Colors.amber,
+                  child: Text(""),
+                )
+              : Container(
+                  color: Colors.amber,
+                  child: GestureDetector(
+                    onTap: () => Get.to(AddWaterReminder()),
+                    child: Text(
+                      "Add Water Reminder",
+                      style: headingStyle,
+                    ),
+                  ),
+                );
+        },
       ),
-      color: Colors.amber,
     );
   }
 

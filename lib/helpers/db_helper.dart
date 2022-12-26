@@ -4,13 +4,22 @@ import '../models/reminder_model.dart';
 
 class DBHelper {
   static Database? _db;
+  static Database? _waterReminderDB;
+
   static final int _version = 1;
-  static final String _tableName = "reminders";
+  static final String _remindersTableName = "reminders";
+  static final String _waterReminderTableName = "waterReminders";
 
   static Future<void> initDb() async {
     if (_db != null) {
       return;
     }
+
+    if (_waterReminderDB != null) {
+      return;
+    }
+
+    //REMINDER
     try {
       String _path = await getDatabasesPath() + 'reminders.db';
       _db = await openDatabase(
@@ -19,7 +28,7 @@ class DBHelper {
         onCreate: (db, version) {
           print("creating a new one");
           return db.execute(
-            "CREATE TABLE $_tableName("
+            "CREATE TABLE $_remindersTableName("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "title STRING, reminder TEXT, date STRING, "
             "time STRING, remindBefore STRING, repeat STRING, "
@@ -30,20 +39,43 @@ class DBHelper {
     } catch (e) {
       print(e);
     }
+
+    //WATER REMINDER
+    try {
+      String _waterReminderPath =
+          await getDatabasesPath() + 'waterReminders.db';
+      _waterReminderDB = await openDatabase(
+        _waterReminderPath,
+        version: _version,
+        onCreate: (db, version) {
+          print("creating a new one");
+          return db.execute(
+            "CREATE TABLE $_waterReminderTableName("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+            "goal INT, date STRING, "
+            "remindPeriod INT, totalDrink INT )",
+          );
+        },
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
+  //Reminder Functions
   static Future<int> insert(Reminder? reminder) async {
     print("insert function called");
-    return await _db?.insert(_tableName, reminder!.toJson()) ?? 1;
+    return await _db?.insert(_remindersTableName, reminder!.toJson()) ?? 1;
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
     print("query function called");
-    return await _db!.query(_tableName);
+    return await _db!.query(_remindersTableName);
   }
 
   static delete(Reminder reminder) async {
-    await _db!.delete(_tableName, where: 'id=?', whereArgs: [reminder.id]);
+    await _db!
+        .delete(_remindersTableName, where: 'id=?', whereArgs: [reminder.id]);
   }
 
   static update(int id) async {
@@ -53,4 +85,25 @@ class DBHelper {
     WHERE id =?
     ''', [1, id]);
   }
+  //Water Reminder Functions
+
+  static Future<List<Map<String, dynamic>>> waterReminderQuery() async {
+    print("query function called");
+    return await _waterReminderDB!.query(_waterReminderTableName);
+  }
+
+  static waterReminderAddDrink(int id, int drinkAmount) async {
+    return await _waterReminderDB!.rawUpdate('''
+    UPDATE reminders
+    SET totalDrink = ?
+    WHERE id =?
+    ''', [drinkAmount, id]);
+  }
+  /*
+  static waterReminderDelete(Reminder reminder) async {
+    await _db!.delete(_waterReminderTableName, where: 'id=?', whereArgs: [reminder.id]);
+  }
+
+ 
+  */
 }

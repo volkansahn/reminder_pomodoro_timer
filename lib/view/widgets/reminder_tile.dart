@@ -88,19 +88,4 @@ class ReminderTile extends StatelessWidget {
       ),
     );
   }
-
-  /*
-  _getBGClr(int no) {
-    switch (no) {
-      case 0:
-        return bluishClr;
-      case 1:
-        return pinkClr;
-      case 2:
-        return yellowClr;
-      default:
-        return bluishClr;
-    }
-  }
-  */
 }
