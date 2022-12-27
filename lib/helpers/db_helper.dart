@@ -4,18 +4,12 @@ import '../models/reminder_model.dart';
 
 class DBHelper {
   static Database? _db;
-  static Database? _waterReminderDB;
-
   static final int _version = 1;
   static final String _remindersTableName = "reminders";
   static final String _waterReminderTableName = "waterReminders";
 
   static Future<void> initDb() async {
     if (_db != null) {
-      return;
-    }
-
-    if (_waterReminderDB != null) {
       return;
     }
 
@@ -44,7 +38,7 @@ class DBHelper {
     try {
       String _waterReminderPath =
           await getDatabasesPath() + 'waterReminders.db';
-      _waterReminderDB = await openDatabase(
+      _db = await openDatabase(
         _waterReminderPath,
         version: _version,
         onCreate: (db, version) {
@@ -52,8 +46,8 @@ class DBHelper {
           return db.execute(
             "CREATE TABLE $_waterReminderTableName("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "goal INT, date STRING, "
-            "remindPeriod INT, totalDrink INT )",
+            "goal INTEGER, date STRING, "
+            "remindPeriod INTEGER, totalDrink INTEGER )",
           );
         },
       );
@@ -89,11 +83,11 @@ class DBHelper {
 
   static Future<List<Map<String, dynamic>>> waterReminderQuery() async {
     print("query function called");
-    return await _waterReminderDB!.query(_waterReminderTableName);
+    return await _db!.query(_waterReminderTableName);
   }
 
   static waterReminderAddDrink(int id, int drinkAmount) async {
-    return await _waterReminderDB!.rawUpdate('''
+    return await _db!.rawUpdate('''
     UPDATE reminders
     SET totalDrink = ?
     WHERE id =?

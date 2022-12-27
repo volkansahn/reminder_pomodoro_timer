@@ -39,14 +39,6 @@ class _HomePageState extends State<HomePage> {
     //init notification
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
-
-    //WaterReminder waterReminder = _reminderController.waterReminderList[1];
-    /*
-    if (waterReminder != null) {
-      isWaterReminderAdded = true;
-    }
-    print(isWaterReminderAdded);
-    print(waterReminder.goal);*/
   }
 
   @override
@@ -58,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           _addBar(),
           _addDateBar(),
-          _addWaterReminder(),
+          _showWaterReminder(),
           SizedBox(height: 10),
           _showReminders()
         ],
@@ -126,30 +118,34 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Container _addWaterReminder() {
-    return Container(
-      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
-      child: Builder(
-        builder: (context) {
-          return isWaterReminderAdded
-              ? Container(
-                  color: Colors.amber,
-                  child: Text(""),
-                )
-              : Container(
-                  color: Colors.amber,
-                  child: GestureDetector(
-                    onTap: () => Get.to(AddWaterReminder()),
-                    child: Text(
-                      "Add Water Reminder",
-                      style: headingStyle,
-                    ),
-                  ),
-                );
-        },
+  _showWaterReminder() {
+    return Expanded(
+      child: Obx(() {
+        return Builder( builder: (BuildContext context) {
+          var waterReminderNumber = _reminderController.waterReminderList.length;
+
+          if (waterReminderNumber > 0){
+            for(int i = 0; i < waterReminderNumber - 1; i++){
+              if(DateTime.now() == _reminderController.waterReminderList[i]){
+                return AddWaterTile(_reminderController.remindwaterReminderListerList[i]);
+              }
+            }
+          }else{
+            return Container(
+              color: Colors.amber,
+              child: GestureDetector(
+              onTap: () => Get.to(AddWaterReminder()),
+                child: Text(
+                  "Add Water Reminder",
+                  style: headingStyle,
+                ),
+              ),
+            );
+          }
+        }
       ),
     );
-  }
+  } 
 
   Container _addDateBar() {
     return Container(
