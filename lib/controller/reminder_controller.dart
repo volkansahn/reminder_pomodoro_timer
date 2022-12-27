@@ -29,6 +29,10 @@ class ReminderController extends GetxController {
     return await DBHelper.insert(reminder);
   }
 
+  Future<int> addWaterReminder({WaterReminder? waterReminder}) async {
+    return await DBHelper.insertWaterReminder(waterReminder);
+  }
+
   void getReminders() async {
     List<Map<String, dynamic>> reminders = await DBHelper.query();
     reminderList.assignAll(reminders.map((e) => Reminder.fromJson(e)));

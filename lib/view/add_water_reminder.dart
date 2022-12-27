@@ -14,6 +14,9 @@ class AddWaterReminder extends StatefulWidget {
 }
 
 class _AddWaterReminderState extends State<AddWaterReminder> {
+  final ReminderController _reminderController = Get.put(ReminderController());
+  final TextEditingController _waterReminderTextController = TextEditingController();
+  var selectedRemindPeriodIndex = 0;
   @override
   void initState() {
     // TODO: implement initState
@@ -87,6 +90,7 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
                     SizedBox(
                       width: 200,
                       child: TextField(
+                        controller: _waterReminderTextController,
                         textAlign: TextAlign.center,
                         decoration: InputDecoration(
                           border: OutlineInputBorder(),
@@ -128,6 +132,7 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
             isRadio: true,
             onSelected: (value, index, isSelected) {
               print("$index is selected");
+              selectedRemindPeriodIndex = index;
             },
             buttons: ["15 min", "30 min", "1 hour"],
             controller: GroupButtonController(selectedIndex: 0),
@@ -147,7 +152,7 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
       child: ElevatedButton(
         style: ButtonStyle(),
         onPressed: () {
-          print("Added");
+          _addWaterRemindertoDB();
         },
         child: const Text('Add',
             style: TextStyle(
@@ -155,6 +160,16 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
               fontWeight: FontWeight.bold,
             )),
       ),
+    );
+  }
+
+  _addWaterRemindertoDB() async {
+    await _reminderController.addWaterReminder(
+      waterReminder: WaterReminder(
+        goal: _waterReminderTextController.text,
+        date: DateFormat.yMd().format(DateTime.now),
+        remindPeriod: selectedRemindPeriodIndex,
+        totalDrink: 0,),
     );
   }
 }

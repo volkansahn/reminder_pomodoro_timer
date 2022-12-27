@@ -1,9 +1,9 @@
 class WaterReminder {
   int? id;
-  int? goal;
+  double? goal;
   String? date;
   int? remindPeriod;
-  int? totalDrink;
+  double? totalDrink;
 
   WaterReminder(
       {this.id, this.goal, this.date, this.remindPeriod, this.totalDrink});

@@ -47,7 +47,7 @@ dependencies:
   sqflite:
   flutter_staggered_animations: ^1.1.1
   group_button: ^5.2.2
-
+  percent_indicator: ^4.0.1
 
 
 dev_dependencies:

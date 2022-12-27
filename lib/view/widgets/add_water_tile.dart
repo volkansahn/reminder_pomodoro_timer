@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../models/water_reminder_model.dart';
 
 class AddWaterTile extends StatelessWidget {
-  final WarterReminder? waterReminder;
+  final WaterReminder? waterReminder;
   AddWaterTile(this.waterReminder);
 
   @override
@@ -14,7 +14,7 @@ class AddWaterTile extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(bottom: 12),
       child: GestureDetector(
-        onTap: () => Get.to(AddWaterReminder()),
+        onTap: () => Get.to(AddWater(waterReminder)),
         child: Container(
             padding: EdgeInsets.all(16),
             //  width: SizeConfig.screenWidth * 0.78,

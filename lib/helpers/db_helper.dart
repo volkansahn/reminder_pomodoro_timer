@@ -46,8 +46,8 @@ class DBHelper {
           return db.execute(
             "CREATE TABLE $_waterReminderTableName("
             "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "goal INTEGER, date STRING, "
-            "remindPeriod INTEGER, totalDrink INTEGER )",
+            "goal DOUBLE, date STRING, "
+            "remindPeriod INTEGER, totalDrink DOUBLE)",
           );
         },
       );
@@ -84,6 +84,11 @@ class DBHelper {
   static Future<List<Map<String, dynamic>>> waterReminderQuery() async {
     print("query function called");
     return await _db!.query(_waterReminderTableName);
+  }
+
+  static Future<int> insert(WaterReminder? waterReminder) async {
+    print("insert function called");
+    return await _db?.insert(_waterReminderTableName, waterReminder!.toJson()) ?? 1;
   }
 
   static waterReminderAddDrink(int id, int drinkAmount) async {
