@@ -9,7 +9,6 @@ class Reminder {
   String? label;
   int? color;
   int? isReminded;
-  bool? isWaterReminder;
 
   Reminder({
     this.id,
@@ -22,7 +21,6 @@ class Reminder {
     this.label,
     this.color,
     this.isReminded,
-    this.isWaterReminder,
   });
 
   Reminder.fromJson(Map<String, dynamic> json) {
@@ -36,7 +34,6 @@ class Reminder {
     label = json['label'];
     color = json['color'];
     isReminded = json['isReminded'];
-    isWaterReminder = json['isWaterReminder'];
   }
 
   Map<String, dynamic> toJson() {
@@ -51,7 +48,6 @@ class Reminder {
     data['label'] = this.label;
     data['color'] = this.color;
     data['isReminded'] = this.isReminded;
-    data['isWaterReminder'] = this.isWaterReminder;
     return data;
   }
 }

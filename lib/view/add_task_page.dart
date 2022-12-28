@@ -38,7 +38,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
       backgroundColor: context.theme.backgroundColor,
       appBar: _customAppBar(context),
       body: Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0),
+        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 50.0),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -319,6 +319,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         isReminded: 0,
       ),
     );
+    Get.back();
   }
 }
 

@@ -10,51 +10,28 @@ class DBHelper {
   static final String _waterReminderTableName = "waterReminders";
 
   static Future<void> initDb() async {
-    if (_db != null) {
-      return;
-    }
+    String _path = await getDatabasesPath() + 'reminders.db';
+    _db = await openDatabase(
+      _path,
+      version: _version,
+      onCreate: _onCreate,
+    );
+  }
 
-    //REMINDER
-    try {
-      String _path = await getDatabasesPath() + 'reminders.db';
-      _db = await openDatabase(
-        _path,
-        version: _version,
-        onCreate: (db, version) {
-          print("creating a new one");
-          return db.execute(
-            "CREATE TABLE $_remindersTableName("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "title STRING, reminder TEXT, date STRING, "
-            "time STRING, remindBefore STRING, repeat STRING, "
-            "color STRING, isReminded STRING, label STRING )",
-          );
-        },
-      );
-    } catch (e) {
-      print(e);
-    }
-
-    //WATER REMINDER
-    try {
-      String _waterReminderPath =
-          await getDatabasesPath() + 'waterReminders.db';
-      _db = await openDatabase(
-        _waterReminderPath,
-        version: _version,
-        onCreate: (db, version) {
-          print("creating a new one");
-          return db.execute(
-            "CREATE TABLE $_waterReminderTableName("
-            "id INTEGER PRIMARY KEY AUTOINCREMENT, "
-            "goal DOUBLE, date STRING, "
-            "remindPeriod INTEGER, totalDrink DOUBLE)",
-          );
-        },
-      );
-    } catch (e) {
-      print(e);
-    }
+  static Future _onCreate(Database db, int version) async {
+    await db.execute(
+      "CREATE TABLE $_remindersTableName("
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "title STRING, reminder TEXT, date STRING, "
+      "time STRING, remindBefore STRING, repeat STRING, "
+      "color STRING, isReminded STRING, label STRING)",
+    );
+    await db.execute(
+      "CREATE TABLE $_waterReminderTableName("
+      "id INTEGER PRIMARY KEY AUTOINCREMENT, "
+      "goal DOUBLE, date STRING, "
+      "remindPeriod INTEGER, totalDrink DOUBLE)",
+    );
   }
 
   //Reminder Functions

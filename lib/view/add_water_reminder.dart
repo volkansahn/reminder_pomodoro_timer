@@ -176,5 +176,6 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
         totalDrink: 0,
       ),
     );
+    Get.back();
   }
 }
