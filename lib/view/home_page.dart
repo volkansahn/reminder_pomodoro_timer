@@ -11,6 +11,7 @@ import 'package:reminder_pomodoro/services/notifications_service.dart';
 import 'package:reminder_pomodoro/services/theme_services.dart';
 import 'package:reminder_pomodoro/view/add_task_page.dart';
 import 'package:reminder_pomodoro/view/add_water_reminder.dart';
+import 'package:reminder_pomodoro/view/widgets/add_water_tile.dart';
 import 'package:reminder_pomodoro/view/widgets/button.dart';
 import 'package:reminder_pomodoro/view/widgets/reminder_tile.dart';
 
@@ -120,32 +121,99 @@ class _HomePageState extends State<HomePage> {
 
   _showWaterReminder() {
     return Expanded(
-      child: Obx(() {
-        return Builder( builder: (BuildContext context) {
-          var waterReminderNumber = _reminderController.waterReminderList.length;
+      child: Obx(
+        () {
+          return Builder(
+            builder: (BuildContext context) {
+              var waterReminderNumber =
+                  _reminderController.waterReminderList.length;
 
-          if (waterReminderNumber > 0){
-            for(int i = 0; i < waterReminderNumber - 1; i++){
-              if(DateTime.now() == _reminderController.waterReminderList[i]){
-                return AddWaterTile(_reminderController.remindwaterReminderListerList[i]);
+              if (waterReminderNumber > 0) {
+                return ListView.builder(
+                    itemCount: _reminderController.reminderList.length,
+                    itemBuilder: (_, index) {
+                      Reminder reminder =
+                          _reminderController.reminderList[index];
+                      if (reminder.repeat == 'Daily') {
+                        DateTime date =
+                            DateFormat.jm().parse(reminder.time.toString());
+                        var myTime = DateFormat("HH:mm").format(date);
+                        notifyHelper.scheduledNotification(
+                            int.parse(myTime.toString().split(":")[0]),
+                            int.parse(myTime.toString().split(":")[1]),
+                            reminder);
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: Row(children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    print("Tapped");
+                                  },
+                                  child: ReminderTile(
+                                      _reminderController.reminderList[index]),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        );
+                      }
+                      if (reminder.date ==
+                          DateFormat.yMd().format(_selectedDate)) {
+                        return AnimationConfiguration.staggeredList(
+                          position: index,
+                          duration: const Duration(milliseconds: 375),
+                          child: SlideAnimation(
+                            verticalOffset: 50.0,
+                            child: FadeInAnimation(
+                              child: Row(children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    print("Tapped");
+                                  },
+                                  child: ReminderTile(
+                                      _reminderController.reminderList[index]),
+                                ),
+                              ]),
+                            ),
+                          ),
+                        );
+                      } else {
+                        return Container();
+                      }
+                    });
+                ;
+                /*
+                for (int i = 0; i < waterReminderNumber - 1; i++) {
+                  if (DateTime.now() ==
+                      _reminderController.waterReminderList[i]) {
+                    return AddWaterTile(
+                        _reminderController.waterReminderList[i]);
+                  } else {
+                    return Container();
+                  }
+                }*/
+              } else {
+                return Container(
+                  color: Colors.amber,
+                  child: GestureDetector(
+                    onTap: () => Get.to(AddWaterReminder()),
+                    child: Text(
+                      "Add Water Reminder",
+                      style: headingStyle,
+                    ),
+                  ),
+                );
               }
-            }
-          }else{
-            return Container(
-              color: Colors.amber,
-              child: GestureDetector(
-              onTap: () => Get.to(AddWaterReminder()),
-                child: Text(
-                  "Add Water Reminder",
-                  style: headingStyle,
-                ),
-              ),
-            );
-          }
-        }
+            },
+          );
+        },
       ),
     );
-  } 
+  }
 
   Container _addDateBar() {
     return Container(
