@@ -1,6 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 
 import '../models/reminder_model.dart';
+import '../models/water_reminder_model.dart';
 
 class DBHelper {
   static Database? _db;
@@ -86,23 +87,18 @@ class DBHelper {
     return await _db!.query(_waterReminderTableName);
   }
 
-  static Future<int> insert(WaterReminder? waterReminder) async {
+  static Future<int> waterReminderInsert(WaterReminder? waterReminder) async {
     print("insert function called");
-    return await _db?.insert(_waterReminderTableName, waterReminder!.toJson()) ?? 1;
+    return await _db?.insert(
+            _waterReminderTableName, waterReminder!.toJson()) ??
+        1;
   }
 
-  static waterReminderAddDrink(int id, int drinkAmount) async {
+  static waterReminderAddDrink(int id, double drinkAmount) async {
     return await _db!.rawUpdate('''
     UPDATE reminders
     SET totalDrink = ?
     WHERE id =?
     ''', [drinkAmount, id]);
   }
-  /*
-  static waterReminderDelete(Reminder reminder) async {
-    await _db!.delete(_waterReminderTableName, where: 'id=?', whereArgs: [reminder.id]);
-  }
-
- 
-  */
 }

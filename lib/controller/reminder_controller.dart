@@ -21,7 +21,7 @@ class ReminderController extends GetxController {
         .assignAll(waterReminders.map((e) => WaterReminder.fromJson(e)));
   }
 
-  Future<void> addDrink(int id, int drinkAmount) async {
+  Future<void> addDrink(int id, double drinkAmount) async {
     await DBHelper.waterReminderAddDrink(id, drinkAmount);
   }
 
@@ -30,7 +30,7 @@ class ReminderController extends GetxController {
   }
 
   Future<int> addWaterReminder({WaterReminder? waterReminder}) async {
-    return await DBHelper.insertWaterReminder(waterReminder);
+    return await DBHelper.waterReminderInsert(waterReminder);
   }
 
   void getReminders() async {

@@ -7,6 +7,9 @@ import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
+import '../controller/reminder_controller.dart';
+import '../models/water_reminder_model.dart';
+
 class AddWater extends StatefulWidget {
   final WaterReminder? waterReminder;
 
@@ -18,7 +21,7 @@ class AddWater extends StatefulWidget {
 
 class _AddWaterState extends State<AddWater> {
   final ReminderController _reminderController = Get.put(ReminderController());
-  var addAmount = 0;
+  double addAmount = 0;
   @override
   void initState() {
     super.initState();
@@ -34,7 +37,7 @@ class _AddWaterState extends State<AddWater> {
           margin: EdgeInsets.only(top: 50),
           child: Column(
             children: [
-              _circleIndicator(),
+              _circleIndicator(context),
               SizedBox(
                 height: 50,
               ),
@@ -71,15 +74,16 @@ class _AddWaterState extends State<AddWater> {
     );
   }
 
-  Container _circleIndicator() {
+  Container _circleIndicator(BuildContext context) {
     return Container(
       child: CircularPercentIndicator(
-                  radius: 60.0,
-                  lineWidth: 5.0,
-                  percent: (waterReminder.totalDrink / waterReminder.goal),
-                  center: new Text("&(waterReminder.totalDrink / waterReminder.goal)"),
-                  progressColor: Colors.blue,
-                ),
+        radius: 60.0,
+        lineWidth: 5.0,
+        percent:
+            (widget.waterReminder!.totalDrink! / widget.waterReminder!.goal!),
+        center: new Text("&(waterReminder.totalDrink / waterReminder.goal)"),
+        progressColor: Colors.blue,
+      ),
     );
   }
 
@@ -122,51 +126,50 @@ class _AddWaterState extends State<AddWater> {
       child: Column(
         children: [
           Container(
-            child: Column(
-              children: [
-                 GroupButton(
-                  isRadio: true,
-                  onSelected: (value, index, isSelected) {
-                    addAmount = double.parse(value);
-                  },
-                  buttons: ["200", "300", "500", "1000"],
-                  controller: GroupButtonController(selectedIndex: 0),
-                  options: GroupButtonOptions(
-                    selectedTextStyle: subHeadingStyle,
-                    unselectedTextStyle: subHeadingStyle,
-                  ),
+            child: Column(children: [
+              GroupButton(
+                isRadio: true,
+                onSelected: (value, index, isSelected) {
+                  print(value);
+                },
+                buttons: ["200", "300", "500", "1000"],
+                controller: GroupButtonController(selectedIndex: 0),
+                options: GroupButtonOptions(
+                  selectedTextStyle: subHeadingStyle,
+                  unselectedTextStyle: subHeadingStyle,
                 ),
-                Row(
-                  children:[
-                    GestureDetector(
-                      child:Text("-"),
-                      onTap: ((){
-                        setState: ((){
+              ),
+              Row(
+                children: [
+                  GestureDetector(
+                      child: Text("-"),
+                      onTap: (() {
+                        setState:
+                        (() {
                           addAmount -= 10;
                         });
-                      })  
-                    ),
-                    Text('&addAmount'),
-                    GestureDetector(
-                      child:Text("-"),
-                      onTap: ((){
-                        setState: ((){
+                      })),
+                  Text('&addAmount'),
+                  GestureDetector(
+                      child: Text("-"),
+                      onTap: (() {
+                        setState:
+                        (() {
                           addAmount += 10;
                         });
-                      })  
-                    ),
-                    Text("ml"),
-                  ],
-                ),
-              ]
-            ),
+                      })),
+                  Text("ml"),
+                ],
+              ),
+            ]),
           ),
           ElevatedButton(
             style: ButtonStyle(),
             onPressed: () {
-              var totalAmount = waterReminder.totalDrink;
+              var totalAmount = widget.waterReminder!.totalDrink!;
               totalAmount += addAmount;
-              _reminderController.addDrink(waterReminder.id, totalAmount);
+              _reminderController.addDrink(
+                  widget.waterReminder!.id!, totalAmount);
             },
             child: const Text(
               'Add',

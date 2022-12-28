@@ -6,6 +6,9 @@ import 'package:group_button/group_button.dart';
 import 'package:intl/intl.dart';
 import 'package:reminder_pomodoro/helpers/theme.dart';
 
+import '../controller/reminder_controller.dart';
+import '../models/water_reminder_model.dart';
+
 class AddWaterReminder extends StatefulWidget {
   const AddWaterReminder({super.key});
 
@@ -15,7 +18,8 @@ class AddWaterReminder extends StatefulWidget {
 
 class _AddWaterReminderState extends State<AddWaterReminder> {
   final ReminderController _reminderController = Get.put(ReminderController());
-  final TextEditingController _waterReminderTextController = TextEditingController();
+  final TextEditingController _waterReminderTextController =
+      TextEditingController();
   var selectedRemindPeriodIndex = 0;
   @override
   void initState() {
@@ -166,10 +170,11 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
   _addWaterRemindertoDB() async {
     await _reminderController.addWaterReminder(
       waterReminder: WaterReminder(
-        goal: _waterReminderTextController.text,
-        date: DateFormat.yMd().format(DateTime.now),
+        goal: double.tryParse(_waterReminderTextController.text),
+        date: DateFormat.yMd().format(DateTime.now()),
         remindPeriod: selectedRemindPeriodIndex,
-        totalDrink: 0,),
+        totalDrink: 0,
+      ),
     );
   }
 }
