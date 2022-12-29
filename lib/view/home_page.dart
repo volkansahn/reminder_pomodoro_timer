@@ -1,8 +1,9 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:hp/pages/data.dart';
-import 'package:hp/pages/habit.dart';
-import 'package:hp/pages/settings.dart';
+import 'package:get/get.dart';
+import 'package:reminder_pomodoro/view/pomodoro.dart';
+import 'package:reminder_pomodoro/view/reminder_page.dart';
+
+import 'fasting_timer.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int index = 1;
+  int index = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,14 +33,13 @@ class _HomePageState extends State<HomePage> {
             label: 'Fasting Timer',
           ),
         ],
-        currentIndex: _selectedIndex,
+        currentIndex: index,
         selectedItemColor: Colors.amber[800],
-        onTap: (selectedIndex){
+        onTap: (selectedIndex) {
           setState(() {
             index = selectedIndex;
           });
         },
-        index: 1,
       ),
       body: Container(
         child: getSelectedWidget(index: index),
@@ -49,13 +49,17 @@ class _HomePageState extends State<HomePage> {
 
   getSelectedWidget({required int index}) {
     Widget widget;
-    switch(index){
+    switch (index) {
       case 0:
         widget = const ReminderPage();
         break;
 
-      case 2:
-        widget = const Pomodoro();
+      case 1:
+        widget = const Pomodoro(
+          breakTime: '0',
+          workSessions: '4',
+          workTime: '25',
+        );
         break;
 
       default:
@@ -63,5 +67,4 @@ class _HomePageState extends State<HomePage> {
     }
     return widget;
   }
-
 }

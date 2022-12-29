@@ -22,6 +22,7 @@ TextStyle get subHeadingStyle {
       textStyle: TextStyle(
     fontSize: 24,
     fontWeight: FontWeight.bold,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
   ));
 }
 
@@ -30,6 +31,7 @@ TextStyle get headingStyle {
       textStyle: TextStyle(
     fontSize: 30,
     fontWeight: FontWeight.bold,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
   ));
 }
 
