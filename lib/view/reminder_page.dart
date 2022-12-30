@@ -70,7 +70,7 @@ class _ReminderPageState extends State<ReminderPage> {
             itemBuilder: (_, index) {
               Reminder reminder = _reminderController.reminderList[index];
               if (reminder.repeat == 'Daily') {
-                DateTime date = DateFormat.jm().parse(reminder.time.toString());
+                DateTime date = DateFormat.jm().parse(reminder.date.toString());
                 var myTime = DateFormat("HH:mm").format(date);
                 notifyHelper.scheduledNotification(
                     int.parse(myTime.toString().split(":")[0]),

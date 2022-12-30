@@ -3,7 +3,6 @@ class Reminder {
   String? title;
   String? reminder;
   String? date;
-  String? time;
   String? remindBefore;
   String? repeat;
   String? label;
@@ -15,7 +14,6 @@ class Reminder {
     this.title,
     this.reminder,
     this.date,
-    this.time,
     this.remindBefore,
     this.repeat,
     this.label,
@@ -28,7 +26,6 @@ class Reminder {
     title = json['title'];
     reminder = json['reminder'];
     date = json['date'];
-    time = json['time'];
     remindBefore = json['remindBefore'];
     repeat = json['repeat'];
     label = json['label'];
@@ -42,7 +39,6 @@ class Reminder {
     data['title'] = this.title;
     data['reminder'] = this.reminder;
     data['date'] = this.date;
-    data['time'] = this.time;
     data['remindBefore'] = this.remindBefore;
     data['repeat'] = this.repeat;
     data['label'] = this.label;

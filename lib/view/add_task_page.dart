@@ -293,7 +293,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
     if (_pickedTime != null) {
       setState(() {
-        _reminderTime = _formatTimeOfDay(_pickedTime);
+        _reminderTime = _pickedTime;
       });
     }
   }
@@ -306,12 +306,13 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _addRemindertoDB() async {
+    final _selectedDt = DateTime(_reminderTime.year, _reminderTime.month, _reminderTime.day, _pickedTime.hour, _pickedTime.minute);
+    final _format = DateFormat.yMd().add_jm();
     await _reminderController.addReminder(
       reminder: Reminder(
         title: _titleController.text,
         reminder: _reminderTextController.text,
-        date: DateFormat.yMd().format(_selectedDate),
-        time: _reminderTime,
+        date: _format.format(_selectedDt),
         remindBefore: _remindBeforeTime,
         repeat: _repeatTime,
         label: _labelController.text,
