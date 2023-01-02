@@ -9,6 +9,7 @@ class ReminderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(reminder!.title);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
@@ -47,7 +48,7 @@ class ReminderTile extends StatelessWidget {
                     ),
                     SizedBox(width: 4),
                     Text(
-                      reminder?.time ?? "",
+                      reminder?.date ?? "",
                       style: GoogleFonts.lato(
                         textStyle:
                             TextStyle(fontSize: 13, color: Colors.grey[100]),
@@ -87,7 +88,8 @@ class ReminderTile extends StatelessWidget {
       ),
     );
   }
-  Color _getBGClr(int colorValue){
+
+  Color _getBGClr(int colorValue) {
     Color newColor = new Color(colorValue);
     return newColor;
   }

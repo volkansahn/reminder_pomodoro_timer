@@ -25,6 +25,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   final TextEditingController _reminderTextController = TextEditingController();
   final TextEditingController _labelController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
+  DateTime _userPickedDate = DateTime.now();
+  TimeOfDay _userPickedTime = TimeOfDay.now();
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
   String _repeatTime = "None";
@@ -282,6 +284,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
     if (_pickedDate != null) {
       setState(() {
+        _userPickedDate = _pickedDate;
         _selectedDate = _pickedDate;
       });
     }
@@ -293,7 +296,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
 
     if (_pickedTime != null) {
       setState(() {
-        _reminderTime = _pickedTime;
+        _userPickedTime = _pickedTime;
+        _reminderTime = _formatTimeOfDay(_pickedTime);
       });
     }
   }
@@ -306,7 +310,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _addRemindertoDB() async {
-    final _selectedDt = DateTime(_reminderTime.year, _reminderTime.month, _reminderTime.day, _pickedTime.hour, _pickedTime.minute);
+    final _selectedDt = DateTime(_userPickedDate.year, _userPickedDate.month,
+        _userPickedDate.day, _userPickedTime.hour, _userPickedTime.minute);
     final _format = DateFormat.yMd().add_jm();
     await _reminderController.addReminder(
       reminder: Reminder(
