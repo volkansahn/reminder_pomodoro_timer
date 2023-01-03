@@ -11,11 +11,19 @@ class DBHelper {
 
   static Future<void> initDb() async {
     String _path = await getDatabasesPath() + 'reminders.db';
+    /*
+    deleteDatabase(_path);
+    */
     _db = await openDatabase(
       _path,
       version: _version,
       onCreate: _onCreate,
     );
+  }
+
+  static Future<void> deleteDatabase(String path) async {
+    print("deleting");
+    databaseFactory.deleteDatabase(path);
   }
 
   static Future _onCreate(Database db, int version) async {

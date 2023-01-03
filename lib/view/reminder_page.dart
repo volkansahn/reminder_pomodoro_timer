@@ -69,7 +69,8 @@ class _ReminderPageState extends State<ReminderPage> {
             itemCount: _reminderController.reminderList.length,
             itemBuilder: (_, index) {
               Reminder reminder = _reminderController.reminderList[index];
-              print(reminder.repeat);
+              final splitted = reminder.date!.split(' ');
+              DateTime reminderDt = DateTime.parse(splitted[0]);
               if (reminder.repeat == 'Daily') {
                 DateTime date = DateFormat.jm().parse(reminder.date.toString());
                 var myTime = DateFormat("HH:mm").format(date);
@@ -96,7 +97,8 @@ class _ReminderPageState extends State<ReminderPage> {
                   ),
                 );
               }
-              if (reminder.date == DateFormat.yMd().format(_selectedDate)) {
+              if (DateFormat.yMd().format(reminderDt) ==
+                  DateFormat.yMd().format(_selectedDate)) {
                 return AnimationConfiguration.staggeredList(
                   position: index,
                   duration: const Duration(milliseconds: 375),

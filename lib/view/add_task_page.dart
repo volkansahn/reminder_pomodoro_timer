@@ -312,7 +312,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
   _addRemindertoDB() async {
     final _selectedDt = DateTime(_userPickedDate.year, _userPickedDate.month,
         _userPickedDate.day, _userPickedTime.hour, _userPickedTime.minute);
-    final _format = DateFormat.yMd().add_jm();
+    final _format = new DateFormat('yyyy-MM-dd').add_jm();
+    var a = _format.format(_selectedDt);
+    print(a);
     await _reminderController.addReminder(
       reminder: Reminder(
         title: _titleController.text,
