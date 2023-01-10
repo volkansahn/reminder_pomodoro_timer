@@ -22,6 +22,7 @@ class AddWater extends StatefulWidget {
 class _AddWaterState extends State<AddWater> {
   final ReminderController _reminderController = Get.put(ReminderController());
   double addAmount = 0;
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +30,9 @@ class _AddWaterState extends State<AddWater> {
 
   @override
   Widget build(BuildContext context) {
+    String drinkedWater = widget.waterReminder!.totalDrink!.toStringAsFixed(0);
+    String goalValue = widget.waterReminder!.goal!.toStringAsFixed(0);
+
     return Scaffold(
       appBar: _customAppBar(context),
       backgroundColor: context.theme.backgroundColor,
@@ -37,11 +41,11 @@ class _AddWaterState extends State<AddWater> {
           margin: EdgeInsets.only(top: 50),
           child: Column(
             children: [
-              _circleIndicator(context),
+              _circleIndicator(context, drinkedWater, goalValue),
               SizedBox(
                 height: 50,
               ),
-              _waterStatus(),
+              _waterStatus(drinkedWater, goalValue),
               SizedBox(
                 height: 50,
               ),
@@ -74,44 +78,73 @@ class _AddWaterState extends State<AddWater> {
     );
   }
 
-  Container _circleIndicator(BuildContext context) {
+  Container _circleIndicator(
+      BuildContext context, String drinkedWater, String goalValue) {
+    double circleRadius = MediaQuery.of(context).size.width - 40;
+
     return Container(
       child: CircularPercentIndicator(
-        radius: 60.0,
-        lineWidth: 5.0,
+        radius: circleRadius / 2,
+        lineWidth: 25.0,
         percent:
             (widget.waterReminder!.totalDrink! / widget.waterReminder!.goal!),
-        center: new Text("&(waterReminder.totalDrink / waterReminder.goal)"),
+        center: new Text(
+          "$drinkedWater / $goalValue",
+          style: titleStyle,
+        ),
         progressColor: Colors.blue,
       ),
     );
   }
 
-  Container _waterStatus() {
+  Container _waterStatus(String drinkedWater, String goalValue) {
+    var remaining = int.parse('$goalValue') - int.parse('$drinkedWater');
+    var balance = double.parse('$drinkedWater') / double.parse('$goalValue');
+
     return Container(
+      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
             child: Column(
               children: [
-                Text("Target"),
-                Text("2400 ml"),
+                Text(
+                  "Target",
+                  style: titleStyle,
+                ),
+                Text(
+                  goalValue,
+                  style: titleStyle,
+                ),
               ],
             ),
           ),
           Container(
             child: Column(
               children: [
-                Text("Remaining"),
-                Text("240 ml"),
+                Text(
+                  "Remaining",
+                  style: titleStyle,
+                ),
+                Text(
+                  "$remaining ml",
+                  style: titleStyle,
+                ),
               ],
             ),
           ),
           Container(
             child: Column(
               children: [
-                Text("Balance"),
-                Text("90 %"),
+                Text(
+                  "Balance",
+                  style: titleStyle,
+                ),
+                Text(
+                  "$balance %",
+                  style: titleStyle,
+                ),
               ],
             ),
           ),
