@@ -49,7 +49,7 @@ class DBHelper {
   }
 
   static Future<List<Map<String, dynamic>>> query() async {
-    print("query function called");
+    print("reminder query function called");
     return await _db!.query(_remindersTableName);
   }
 
@@ -68,7 +68,7 @@ class DBHelper {
   //Water Reminder Functions
 
   static Future<List<Map<String, dynamic>>> waterReminderQuery() async {
-    print("query function called");
+    print("water query function called");
     return await _db!.query(_waterReminderTableName);
   }
 

@@ -1,27 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:reminder_pomodoro/helpers/theme.dart';
 
 class myButton extends StatelessWidget {
-  const myButton({super.key, required this.label, this.onTap});
+  const myButton(
+      {super.key, required this.label, this.onTap, required this.buttonWidth});
   final String label;
   final Function()? onTap;
+  final double buttonWidth;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 80.0,
-        height: 60.0,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20.0),
-          color: Colors.blue,
-        ),
-        child: Align(
-          alignment: Alignment.center,
-          child: Text(
-            label,
-            style: TextStyle(color: Colors.white),
+    return Center(
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          height: 60.0,
+          width: buttonWidth,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20.0),
+            color: Colors.blue,
+          ),
+          child: Center(
+            child: Text(
+              label,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ),
         ),
       ),

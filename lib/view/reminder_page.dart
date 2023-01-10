@@ -41,6 +41,8 @@ class _ReminderPageState extends State<ReminderPage> {
     //init notification
     notifyHelper.initializeNotification();
     notifyHelper.requestIOSPermissions();
+    _reminderController.getReminders();
+    _reminderController.getWaterReminders();
   }
 
   @override
@@ -74,6 +76,7 @@ class _ReminderPageState extends State<ReminderPage> {
               if (reminder.repeat == 'Daily') {
                 DateTime date = DateFormat.jm().parse(reminder.date.toString());
                 var myTime = DateFormat("HH:mm").format(date);
+                print(myTime);
                 notifyHelper.scheduledNotification(
                     int.parse(myTime.toString().split(":")[0]),
                     int.parse(myTime.toString().split(":")[1]),
@@ -99,6 +102,8 @@ class _ReminderPageState extends State<ReminderPage> {
               }
               if (DateFormat.yMd().format(reminderDt) ==
                   DateFormat.yMd().format(_selectedDate)) {
+                print(reminder.date);
+
                 return AnimationConfiguration.staggeredList(
                   position: index,
                   duration: const Duration(milliseconds: 375),
@@ -126,26 +131,21 @@ class _ReminderPageState extends State<ReminderPage> {
   }
 
   _showWaterReminder() {
-    _reminderController.getWaterReminders();
-
     var waterReminderNumber = _reminderController.waterReminderList.length;
-    print(waterReminderNumber);
     if (waterReminderNumber > 0) {
+      for (int i = 0; i < waterReminderNumber; i++) {
+        if (_reminderController.waterReminderList[i].date ==
+            (DateFormat.yMd().format(_selectedDate))) {
+          return Container(
+            child: AddWaterTile(_reminderController.waterReminderList[i]),
+          );
+        }
+      }
       return Container(
-        color: Colors.blue,
-        child: Text('hello'),
+        child: Text(DateFormat.yMd().format(_selectedDate)),
       );
     } else {
-      return Container(
-        color: Colors.amber,
-        child: GestureDetector(
-          onTap: () => Get.to(AddWaterReminder()),
-          child: Text(
-            "Add Water Reminder",
-            style: headingStyle,
-          ),
-        ),
-      );
+      return _addWaterReminder();
     }
   }
 
@@ -197,11 +197,13 @@ class _ReminderPageState extends State<ReminderPage> {
             ),
           ),
           myButton(
-              label: "+ Add",
-              onTap: () async {
-                await Get.to(() => AddTaskPage());
-                _reminderController.getReminders();
-              }),
+            label: "+ Add",
+            onTap: () async {
+              await Get.to(() => AddTaskPage());
+              _reminderController.getReminders();
+            },
+            buttonWidth: 100,
+          ),
         ],
       ),
     );
@@ -209,12 +211,18 @@ class _ReminderPageState extends State<ReminderPage> {
 
   AppBar _customAppBar(BuildContext context) {
     return AppBar(
+      title: Center(
+        child: Text(
+          'REMINDER',
+          style: titleStyle,
+        ),
+      ),
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
       actions: [
         GestureDetector(
           child: Icon(
-            Icons.add,
+            Icons.settings,
             size: 40.0,
             color: Get.isDarkMode ? Colors.white : Colors.black,
           ),
@@ -230,6 +238,52 @@ class _ReminderPageState extends State<ReminderPage> {
         ),
         SizedBox(width: 20),
       ],
+    );
+  }
+}
+
+class _addWaterReminder extends StatelessWidget {
+  const _addWaterReminder({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      width: MediaQuery.of(context).size.width,
+      height: 80,
+      margin: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 20),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.amber,
+      ),
+      child: GestureDetector(
+        onTap: () => Get.to(() => AddWaterReminder()),
+        child: Center(
+          child: Row(
+            children: [
+              Text(
+                "Add Water Reminder",
+                style: GoogleFonts.lato(
+                  textStyle: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white),
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+              Icon(
+                Icons.water_drop_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

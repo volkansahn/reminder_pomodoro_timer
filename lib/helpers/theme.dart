@@ -38,7 +38,7 @@ TextStyle get headingStyle {
 TextStyle get titleStyle {
   return GoogleFonts.lato(
       textStyle: TextStyle(
-    fontSize: 18.0,
+    fontSize: 24.0,
     fontWeight: FontWeight.w800,
     color: Get.isDarkMode ? Colors.white : Colors.black,
   ));

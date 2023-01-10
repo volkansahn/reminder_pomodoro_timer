@@ -9,7 +9,6 @@ class ReminderTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(reminder!.title);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,

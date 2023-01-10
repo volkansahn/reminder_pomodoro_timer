@@ -190,7 +190,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     DropdownMenuItem(
                       child: GestureDetector(
                         onTap: () {},
-                        child: Text("Every Hour"),
+                        child: Text("Every Day"),
                       ),
                       value: "Every Hour",
                     ),
@@ -262,11 +262,16 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   },
                 ),
               ),
+              SizedBox(
+                height: 20.0,
+              ),
               myButton(
-                  label: "Add Reminder",
-                  onTap: () {
-                    _addRemindertoDB();
-                  }),
+                label: "Add Reminder",
+                onTap: () {
+                  _addRemindertoDB();
+                },
+                buttonWidth: MediaQuery.of(context).size.width,
+              ),
             ],
           ),
         ),
@@ -314,7 +319,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
         _userPickedDate.day, _userPickedTime.hour, _userPickedTime.minute);
     final _format = new DateFormat('yyyy-MM-dd').add_jm();
     var a = _format.format(_selectedDt);
-    print(a);
     await _reminderController.addReminder(
       reminder: Reminder(
         title: _titleController.text,
