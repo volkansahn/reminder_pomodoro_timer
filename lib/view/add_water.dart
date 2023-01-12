@@ -12,7 +12,6 @@ import '../models/water_reminder_model.dart';
 
 class AddWater extends StatefulWidget {
   final WaterReminder? waterReminder;
-
   const AddWater(this.waterReminder);
 
   @override
@@ -43,11 +42,11 @@ class _AddWaterState extends State<AddWater> {
             children: [
               _circleIndicator(context, drinkedWater, goalValue),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
               _waterStatus(drinkedWater, goalValue),
               SizedBox(
-                height: 50,
+                height: 30,
               ),
               _addButton(),
             ],
@@ -80,14 +79,17 @@ class _AddWaterState extends State<AddWater> {
 
   Container _circleIndicator(
       BuildContext context, String drinkedWater, String goalValue) {
-    double circleRadius = MediaQuery.of(context).size.width - 40;
-
+    double circleRadius = MediaQuery.of(context).size.width - 50;
+    double percent =
+        widget.waterReminder!.totalDrink! / widget.waterReminder!.goal!;
+    if (percent > 1) {
+      percent = 1;
+    }
     return Container(
       child: CircularPercentIndicator(
         radius: circleRadius / 2,
         lineWidth: 25.0,
-        percent:
-            (widget.waterReminder!.totalDrink! / widget.waterReminder!.goal!),
+        percent: percent,
         center: new Text(
           "$drinkedWater / $goalValue",
           style: titleStyle,
@@ -99,10 +101,15 @@ class _AddWaterState extends State<AddWater> {
 
   Container _waterStatus(String drinkedWater, String goalValue) {
     var remaining = int.parse('$goalValue') - int.parse('$drinkedWater');
-    var balance = double.parse('$drinkedWater') / double.parse('$goalValue');
-
+    var balance =
+        ((double.parse('$drinkedWater') / double.parse('$goalValue')) * 100)
+            .toStringAsFixed(2);
+    if ((double.parse('$drinkedWater') / double.parse('$goalValue')) * 100 >
+        100) {
+      balance = "100";
+    }
     return Container(
-      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
+      margin: EdgeInsets.only(right: 20.0, left: 20.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -155,7 +162,7 @@ class _AddWaterState extends State<AddWater> {
 
   Container _addButton() {
     return Container(
-      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
+      margin: EdgeInsets.only(right: 20.0, left: 20.0),
       child: Column(
         children: [
           Container(
@@ -163,38 +170,85 @@ class _AddWaterState extends State<AddWater> {
               GroupButton(
                 isRadio: true,
                 onSelected: (value, index, isSelected) {
-                  print(value);
+                  setState(() {
+                    addAmount = double.parse(value);
+                  });
                 },
                 buttons: ["200", "300", "500", "1000"],
-                controller: GroupButtonController(selectedIndex: 0),
                 options: GroupButtonOptions(
                   selectedTextStyle: subHeadingStyle,
                   unselectedTextStyle: subHeadingStyle,
                 ),
               ),
-              Row(
-                children: [
-                  GestureDetector(
-                      child: Text("-"),
-                      onTap: (() {
-                        setState:
-                        (() {
-                          addAmount -= 10;
-                        });
-                      })),
-                  Text('&addAmount'),
-                  GestureDetector(
-                      child: Text("-"),
-                      onTap: (() {
-                        setState:
-                        (() {
-                          addAmount += 10;
-                        });
-                      })),
-                  Text("ml"),
-                ],
+              SizedBox(
+                height: 20,
+              ),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.red,
+                      ),
+                      child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              addAmount = addAmount - 10;
+                            });
+                          },
+                          child: Center(
+                              child: Text(
+                            "-",
+                            style: titleStyle,
+                          ))),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Text(
+                      "$addAmount",
+                      style: titleStyle,
+                    ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "ml",
+                      style: titleStyle,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 60,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.green,
+                      ),
+                      child: GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              addAmount += 10;
+                            });
+                          },
+                          child: Center(
+                              child: Text(
+                            "+",
+                            style: titleStyle,
+                          ))),
+                    ),
+                  ],
+                ),
               ),
             ]),
+          ),
+          SizedBox(
+            height: 20,
           ),
           ElevatedButton(
             style: ButtonStyle(),

@@ -80,8 +80,9 @@ class DBHelper {
   }
 
   static waterReminderAddDrink(int id, double drinkAmount) async {
+    print("update");
     return await _db!.rawUpdate('''
-    UPDATE reminders
+    UPDATE waterReminders
     SET totalDrink = ?
     WHERE id =?
     ''', [drinkAmount, id]);
