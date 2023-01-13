@@ -137,7 +137,9 @@ class _ReminderPageState extends State<ReminderPage> {
         if (_reminderController.waterReminderList[i].date ==
             (DateFormat.yMd().format(_selectedDate))) {
           return Container(
-            child: AddWaterTile(_reminderController.waterReminderList[i]),
+            child: Obx(() {
+              AddWaterTile(_reminderController.waterReminderList[i]),
+            }),
           );
         }
       }
