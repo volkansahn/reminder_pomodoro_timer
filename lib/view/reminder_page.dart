@@ -63,8 +63,6 @@ class _ReminderPageState extends State<ReminderPage> {
   }
 
   _showReminders() {
-    _reminderController.getReminders();
-
     return Expanded(
       child: Obx(() {
         return ListView.builder(
@@ -131,24 +129,40 @@ class _ReminderPageState extends State<ReminderPage> {
   }
 
   _showWaterReminder() {
-    var waterReminderNumber = _reminderController.waterReminderList.length;
-    if (waterReminderNumber > 0) {
-      for (int i = 0; i < waterReminderNumber; i++) {
-        if (_reminderController.waterReminderList[i].date ==
-            (DateFormat.yMd().format(_selectedDate))) {
-          return Container(
-            child: Obx(() {
-              AddWaterTile(_reminderController.waterReminderList[i]),
-            }),
-          );
+    return Obx((() {
+      var waterReminderNumber = _reminderController.waterReminderList.length;
+      if (waterReminderNumber > 0) {
+        for (int i = 0; i < waterReminderNumber; i++) {
+          if (_reminderController.waterReminderList[i].date ==
+              (DateFormat.yMd().format(_selectedDate))) {
+            print("here");
+            return AnimationConfiguration.staggeredList(
+              position: 0,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Row(children: [
+                    GestureDetector(
+                      onTap: () {
+                        print("Tapped");
+                      },
+                      child: AddWaterTile(
+                          _reminderController.waterReminderList[i]),
+                    ),
+                  ]),
+                ),
+              ),
+            );
+          }
         }
+        return Container(
+          child: Text(DateFormat.yMd().format(_selectedDate)),
+        );
+      } else {
+        return _addWaterReminder();
       }
-      return Container(
-        child: Text(DateFormat.yMd().format(_selectedDate)),
-      );
-    } else {
-      return _addWaterReminder();
-    }
+    }));
   }
 
   Container _addDateBar() {

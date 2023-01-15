@@ -11,9 +11,9 @@ class DBHelper {
 
   static Future<void> initDb() async {
     String _path = await getDatabasesPath() + 'reminders.db';
-    /*
+/*
     deleteDatabase(_path);
-    */
+*/
     _db = await openDatabase(
       _path,
       version: _version,
