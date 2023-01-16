@@ -26,6 +26,7 @@ class ReminderController extends GetxController {
   }
 
   Future<int> addReminder({Reminder? reminder}) async {
+    print(reminder);
     return await DBHelper.insert(reminder);
   }
 

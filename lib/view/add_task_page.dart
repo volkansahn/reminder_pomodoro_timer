@@ -30,6 +30,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
   String _repeatTime = "None";
+  int intervalTime = 0;
   bool isRemindBefore = false;
   bool isRepeat = false;
   Color mycolor = Colors.blue;
@@ -189,28 +190,36 @@ class _AddTaskPageState extends State<AddTaskPage> {
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          intervalTime = 1;
+                        },
                         child: Text("Every Day"),
                       ),
-                      value: "Every Hour",
+                      value: "Every Day",
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          intervalTime = 7;
+                        },
                         child: Text("Every Week"),
                       ),
                       value: "Every Week",
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          intervalTime = 30;
+                        },
                         child: Text("Every Month"),
                       ),
                       value: "Every Month",
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          intervalTime = 365;
+                        },
                         child: Text("Every Year"),
                       ),
                       value: "Every Year",
@@ -326,6 +335,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
         date: _format.format(_selectedDt),
         remindBefore: _remindBeforeTime,
         repeat: _repeatTime,
+        interval: intervalTime,
         label: _labelController.text,
         color: mycolor.value,
         isReminded: 0,
