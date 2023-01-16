@@ -173,6 +173,7 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
         goal: double.tryParse(_waterReminderTextController.text),
         date: DateFormat.yMd().format(DateTime.now()),
         remindPeriod: selectedRemindPeriodIndex,
+        isValid: 1,
         totalDrink: 0,
       ),
     );

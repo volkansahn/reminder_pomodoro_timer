@@ -3,6 +3,7 @@ class WaterReminder {
   double? goal;
   String? date;
   int? remindPeriod;
+  int? isValid;
   double? totalDrink;
 
   WaterReminder(
@@ -13,6 +14,7 @@ class WaterReminder {
     goal = json['goal'];
     date = json['date'];
     remindPeriod = json['remindPeriod'];
+    interval = json['isValid'];
     totalDrink = json['totalDrink'];
   }
 
@@ -22,6 +24,7 @@ class WaterReminder {
     data['goal'] = this.goal;
     data['date'] = this.date;
     data['remindPeriod'] = this.remindPeriod;
+    data['isValid'] = this.interval;
     data['totalDrink'] = this.totalDrink;
     return data;
   }

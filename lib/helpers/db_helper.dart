@@ -38,7 +38,7 @@ class DBHelper {
       "CREATE TABLE $_waterReminderTableName("
       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
       "goal DOUBLE, date STRING, "
-      "remindPeriod INTEGER, totalDrink DOUBLE)",
+      "remindPeriod INTEGER, isValid INTEGER, totalDrink DOUBLE)",
     );
   }
 

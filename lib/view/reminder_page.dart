@@ -98,41 +98,42 @@ class _ReminderPageState extends State<ReminderPage> {
                   return Container();
                 }
               } else if (reminderDt.compareTo(_selectedDate) < 0) {
-                final List<DateTime> dates;
-                for(int i = 0; i < )
-              }
 
-              if (DateFormat.yMd().format(reminderDt) ==
-                  DateFormat.yMd().format(_selectedDate)) {}
-
-              if (reminder.repeat == 'Daily') {
-                DateTime date = DateFormat.jm().parse(reminder.date.toString());
-                var myTime = DateFormat("HH:mm").format(date);
-                print(myTime);
-                notifyHelper.scheduledNotification(
-                    int.parse(myTime.toString().split(":")[0]),
-                    int.parse(myTime.toString().split(":")[1]),
-                    reminder);
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: Row(children: [
-                        GestureDetector(
-                          onTap: () {
-                            print("Tapped");
-                          },
-                          child: ReminderTile(
-                              _reminderController.reminderList[index]),
+                final difference = _selectedDate.difference(reminderDt).inDays;
+                
+                for(int i = 0; i < difference; reminder.interval){
+                  
+                  reminderDt = reminderDt.add(const Duration(days: i));
+                  
+                  if (DateFormat.yMd().format(reminderDt) ==
+                    DateFormat.yMd().format(_selectedDate)) {
+                  
+                    print(reminder);
+                  
+                    return AnimationConfiguration.staggeredList(
+                      position: index,
+                      duration: const Duration(milliseconds: 375),
+                      child: SlideAnimation(
+                        verticalOffset: 50.0,
+                        child: FadeInAnimation(
+                          child: Row(children: [
+                            GestureDetector(
+                              onTap: () {
+                                print("Tapped");
+                              },
+                              child: ReminderTile(
+                                  _reminderController.reminderList[index]),
+                            ),
+                          ]),
                         ),
-                      ]),
-                    ),
-                  ),
-                );
+                      ),
+                    );
+                  }
+                }
+              }else{
+                return Container();
               }
-            });
+          });
       }),
     );
   }
@@ -140,7 +141,10 @@ class _ReminderPageState extends State<ReminderPage> {
   _showWaterReminder() {
     return Obx((() {
       var waterReminderNumber = _reminderController.waterReminderList.length;
-      if (waterReminderNumber > 0) {
+
+      if(waterReminderNumber == 0){
+        return _addWaterReminder();
+      }else{
         for (int i = 0; i < waterReminderNumber; i++) {
           if (_reminderController.waterReminderList[i].date ==
               (DateFormat.yMd().format(_selectedDate))) {
@@ -164,13 +168,44 @@ class _ReminderPageState extends State<ReminderPage> {
             );
           }
         }
-        return Container(
-          child: Text(DateFormat.yMd().format(_selectedDate)),
-        );
-      } else {
-        return _addWaterReminder();
+        if(waterReminderList[waterReminderNumber - 1].isValid == 1){
+          await _addWaterRemindertoDB(waterReminderList[waterReminderNumber - 1]);
+          return AnimationConfiguration.staggeredList(
+              position: 0,
+              duration: const Duration(milliseconds: 375),
+              child: SlideAnimation(
+                verticalOffset: 50.0,
+                child: FadeInAnimation(
+                  child: Row(children: [
+                    GestureDetector(
+                      onTap: () {
+                        print("Tapped");
+                      },
+                      child: AddWaterTile(
+                          _reminderController.waterReminderList[i]),
+                    ),
+                  ]),
+                ),
+              ),
+            );
+        }else {
+          return _addWaterReminder();
+        }
       }
     }));
+  }
+
+  _addWaterRemindertoDB(WaterReminder waterReminder) async {
+    await _reminderController.addWaterReminder(
+      waterReminder: WaterReminder(
+        goal: waterReminder.goal,
+        date: DateFormat.yMd().format(_selectedDate),
+        remindPeriod: waterReminder.remindPeriod,
+        isValid: 1,
+        totalDrink: 0,
+      ),
+    );
+    Get.back();
   }
 
   Container _addDateBar() {
