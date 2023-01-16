@@ -257,6 +257,7 @@ class _AddWaterState extends State<AddWater> {
               totalAmount += addAmount;
               _reminderController.addDrink(
                   widget.waterReminder!.id!, totalAmount);
+              Get.back();
             },
             child: const Text(
               'Add',

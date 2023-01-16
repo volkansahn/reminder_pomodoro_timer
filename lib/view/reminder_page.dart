@@ -72,11 +72,9 @@ class _ReminderPageState extends State<ReminderPage> {
               final splitted = reminder.date!.split(' ');
               DateTime reminderDt = DateTime.parse(splitted[0]);
 
-              if (reminder.interval == null) {
+              if (reminder.interval == 0) {
                 if (DateFormat.yMd().format(reminderDt) ==
                     DateFormat.yMd().format(_selectedDate)) {
-                  print(reminder);
-
                   return AnimationConfiguration.staggeredList(
                     position: index,
                     duration: const Duration(milliseconds: 375),
@@ -101,13 +99,11 @@ class _ReminderPageState extends State<ReminderPage> {
               } else if (reminderDt.compareTo(_selectedDate) < 0) {
                 final difference = _selectedDate.difference(reminderDt).inDays;
 
-                for (int i = 0; i < difference; reminder.interval) {
+                for (int i = 0; i <= difference; i = i + reminder.interval!) {
                   reminderDt = reminderDt.add(Duration(days: i));
 
                   if (DateFormat.yMd().format(reminderDt) ==
                       DateFormat.yMd().format(_selectedDate)) {
-                    print(reminder);
-
                     return AnimationConfiguration.staggeredList(
                       position: index,
                       duration: const Duration(milliseconds: 375),

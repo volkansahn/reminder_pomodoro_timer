@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../../controller/reminder_controller.dart';
 import '../../models/water_reminder_model.dart';
 import '../add_water.dart';
 
@@ -16,13 +17,12 @@ class AddWaterTile extends StatefulWidget {
 class _AddWaterTileState extends State<AddWaterTile> {
   late String drinkedWater;
   late String goalValue;
+  final _reminderController = Get.put(ReminderController());
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    drinkedWater = widget.waterReminder!.totalDrink!.toStringAsFixed(0);
-    goalValue = widget.waterReminder!.goal!.toStringAsFixed(0);
   }
 
   @override
@@ -35,6 +35,8 @@ class _AddWaterTileState extends State<AddWaterTile> {
       fill,
       fill,
     ];
+    drinkedWater = widget.waterReminder!.totalDrink!.toStringAsFixed(0);
+    goalValue = widget.waterReminder!.goal!.toStringAsFixed(0);
     final double fillPercent =
         (widget.waterReminder!.totalDrink! / widget.waterReminder!.goal!) * 100;
     final double fillStop = (100 - fillPercent) / 100;
@@ -44,7 +46,10 @@ class _AddWaterTileState extends State<AddWaterTile> {
       width: MediaQuery.of(context).size.width,
       margin: EdgeInsets.only(bottom: 12, top: 12),
       child: GestureDetector(
-        onTap: () => Get.to(AddWater(widget.waterReminder)),
+        onTap: () async {
+          await Get.to(AddWater(widget.waterReminder));
+          _reminderController.getWaterReminders();
+        },
         child: Container(
           height: 80,
           padding: EdgeInsets.all(16),

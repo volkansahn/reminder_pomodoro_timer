@@ -31,8 +31,8 @@ class DBHelper {
       "CREATE TABLE $_remindersTableName("
       "id INTEGER PRIMARY KEY AUTOINCREMENT, "
       "title STRING, reminder TEXT, date STRING, "
-      "time STRING, remindBefore STRING, repeat STRING, "
-      "interval INTEGER, color STRING, isReminded STRING, label STRING)",
+      "time STRING, remindBefore STRING, interval INTEGER,"
+      "color STRING, isReminded STRING, label STRING)",
     );
     await db.execute(
       "CREATE TABLE $_waterReminderTableName("

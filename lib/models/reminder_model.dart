@@ -4,7 +4,6 @@ class Reminder {
   String? reminder;
   String? date;
   String? remindBefore;
-  String? repeat;
   String? label;
   int? interval;
   int? color;
@@ -16,7 +15,6 @@ class Reminder {
     this.reminder,
     this.date,
     this.remindBefore,
-    this.repeat,
     this.label,
     this.interval,
     this.color,
@@ -29,7 +27,6 @@ class Reminder {
     reminder = json['reminder'];
     date = json['date'];
     remindBefore = json['remindBefore'];
-    repeat = json['repeat'];
     interval = json['interval'];
     label = json['label'];
     color = json['color'];
@@ -43,7 +40,6 @@ class Reminder {
     data['reminder'] = this.reminder;
     data['date'] = this.date;
     data['remindBefore'] = this.remindBefore;
-    data['repeat'] = this.repeat;
     data['interval'] = this.interval;
     data['label'] = this.label;
     data['color'] = this.color;

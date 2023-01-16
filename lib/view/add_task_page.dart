@@ -183,51 +183,63 @@ class _AddTaskPageState extends State<AddTaskPage> {
                   dropDownMenuItem: [
                     DropdownMenuItem(
                       child: GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          setState(() {
+                            _repeatTime = "None";
+                          });
+                        },
                         child: Text("None"),
                       ),
-                      value: "None",
+                      value: 0,
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
                         onTap: () {
-                          intervalTime = 1;
+                          setState(() {
+                            _repeatTime = "Every Day";
+                          });
                         },
                         child: Text("Every Day"),
                       ),
-                      value: "Every Day",
+                      value: 1,
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
                         onTap: () {
-                          intervalTime = 7;
+                          setState(() {
+                            _repeatTime = "Every Week";
+                          });
                         },
                         child: Text("Every Week"),
                       ),
-                      value: "Every Week",
+                      value: 7,
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
                         onTap: () {
-                          intervalTime = 30;
+                          setState(() {
+                            _repeatTime = "Every Month";
+                          });
                         },
                         child: Text("Every Month"),
                       ),
-                      value: "Every Month",
+                      value: 30,
                     ),
                     DropdownMenuItem(
                       child: GestureDetector(
                         onTap: () {
-                          intervalTime = 365;
+                          setState(() {
+                            _repeatTime = "Every Year";
+                          });
                         },
                         child: Text("Every Year"),
                       ),
-                      value: "Every Year",
+                      value: 365,
                     ),
                   ],
                   onChanged: (value) {
                     setState(() {
-                      _repeatTime = value;
+                      intervalTime = value;
                     });
                   },
                   hintText: _repeatTime,
@@ -324,6 +336,8 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _addRemindertoDB() async {
+    print("interval");
+    print(intervalTime);
     final _selectedDt = DateTime(_userPickedDate.year, _userPickedDate.month,
         _userPickedDate.day, _userPickedTime.hour, _userPickedTime.minute);
     final _format = new DateFormat('yyyy-MM-dd').add_jm();
@@ -334,7 +348,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
         reminder: _reminderTextController.text,
         date: _format.format(_selectedDt),
         remindBefore: _remindBeforeTime,
-        repeat: _repeatTime,
         interval: intervalTime,
         label: _labelController.text,
         color: mycolor.value,
