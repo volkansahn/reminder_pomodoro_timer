@@ -7,14 +7,19 @@ class WaterReminder {
   double? totalDrink;
 
   WaterReminder(
-      {this.id, this.goal, this.date, this.remindPeriod, this.totalDrink});
+      {this.id,
+      this.goal,
+      this.date,
+      this.remindPeriod,
+      this.totalDrink,
+      this.isValid});
 
   WaterReminder.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     goal = json['goal'];
     date = json['date'];
     remindPeriod = json['remindPeriod'];
-    interval = json['isValid'];
+    isValid = json['isValid'];
     totalDrink = json['totalDrink'];
   }
 
@@ -24,7 +29,7 @@ class WaterReminder {
     data['goal'] = this.goal;
     data['date'] = this.date;
     data['remindPeriod'] = this.remindPeriod;
-    data['isValid'] = this.interval;
+    data['isValid'] = this.isValid;
     data['totalDrink'] = this.totalDrink;
     return data;
   }

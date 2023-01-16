@@ -157,6 +157,7 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
         style: ButtonStyle(),
         onPressed: () {
           _addWaterRemindertoDB();
+          Get.back();
         },
         child: const Text('Add',
             style: TextStyle(
@@ -177,6 +178,5 @@ class _AddWaterReminderState extends State<AddWaterReminder> {
         totalDrink: 0,
       ),
     );
-    Get.back();
   }
 }
