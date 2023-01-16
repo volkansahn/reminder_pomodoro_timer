@@ -71,6 +71,40 @@ class _ReminderPageState extends State<ReminderPage> {
               Reminder reminder = _reminderController.reminderList[index];
               final splitted = reminder.date!.split(' ');
               DateTime reminderDt = DateTime.parse(splitted[0]);
+              if (reminder.interval == null) {
+                if (DateFormat.yMd().format(reminderDt) ==
+                    DateFormat.yMd().format(_selectedDate)) {
+                  print(reminder);
+
+                  return AnimationConfiguration.staggeredList(
+                    position: index,
+                    duration: const Duration(milliseconds: 375),
+                    child: SlideAnimation(
+                      verticalOffset: 50.0,
+                      child: FadeInAnimation(
+                        child: Row(children: [
+                          GestureDetector(
+                            onTap: () {
+                              print("Tapped");
+                            },
+                            child: ReminderTile(
+                                _reminderController.reminderList[index]),
+                          ),
+                        ]),
+                      ),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              } else if (reminderDt.compareTo(_selectedDate) < 0) {
+                final List<DateTime> dates;
+                for(int i = 0; i < )
+              }
+
+              if (DateFormat.yMd().format(reminderDt) ==
+                  DateFormat.yMd().format(_selectedDate)) {}
+
               if (reminder.repeat == 'Daily') {
                 DateTime date = DateFormat.jm().parse(reminder.date.toString());
                 var myTime = DateFormat("HH:mm").format(date);
@@ -98,31 +132,6 @@ class _ReminderPageState extends State<ReminderPage> {
                   ),
                 );
               }
-              if (DateFormat.yMd().format(reminderDt) ==
-                  DateFormat.yMd().format(_selectedDate)) {
-                print(reminder.date);
-
-                return AnimationConfiguration.staggeredList(
-                  position: index,
-                  duration: const Duration(milliseconds: 375),
-                  child: SlideAnimation(
-                    verticalOffset: 50.0,
-                    child: FadeInAnimation(
-                      child: Row(children: [
-                        GestureDetector(
-                          onTap: () {
-                            print("Tapped");
-                          },
-                          child: ReminderTile(
-                              _reminderController.reminderList[index]),
-                        ),
-                      ]),
-                    ),
-                  ),
-                );
-              } else {
-                return Container();
-              }
             });
       }),
     );
@@ -135,7 +144,6 @@ class _ReminderPageState extends State<ReminderPage> {
         for (int i = 0; i < waterReminderNumber; i++) {
           if (_reminderController.waterReminderList[i].date ==
               (DateFormat.yMd().format(_selectedDate))) {
-            print("here");
             return AnimationConfiguration.staggeredList(
               position: 0,
               duration: const Duration(milliseconds: 375),
