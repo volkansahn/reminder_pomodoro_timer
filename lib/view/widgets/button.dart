@@ -5,10 +5,15 @@ import 'package:reminder_pomodoro/helpers/theme.dart';
 
 class myButton extends StatelessWidget {
   const myButton(
-      {super.key, required this.label, this.onTap, required this.buttonWidth});
+      {super.key,
+      required this.label,
+      this.onTap,
+      required this.buttonWidth,
+      required this.color});
   final String label;
   final Function()? onTap;
   final double buttonWidth;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +25,7 @@ class myButton extends StatelessWidget {
           width: buttonWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20.0),
-            color: Colors.blue,
+            color: color,
           ),
           child: Center(
             child: Text(

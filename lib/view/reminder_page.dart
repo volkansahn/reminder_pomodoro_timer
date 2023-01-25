@@ -296,6 +296,7 @@ class _ReminderPageState extends State<ReminderPage> {
           ),
           myButton(
             label: "+ Add",
+            color: Colors.blue,
             onTap: () async {
               await Get.to(() => AddTaskPage());
               _reminderController.getReminders();

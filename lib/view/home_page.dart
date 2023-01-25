@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reminder_pomodoro/view/pomodoro.dart';
 import 'package:reminder_pomodoro/view/reminder_page.dart';
-
-import 'fasting_timer.dart';
+import 'package:reminder_pomodoro/view/timer_home.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,11 +25,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.av_timer_sharp),
-            label: 'Pomodoro',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.timer),
-            label: 'Fasting Timer',
+            label: 'Timer',
           ),
         ],
         currentIndex: index,
@@ -55,15 +50,16 @@ class _HomePageState extends State<HomePage> {
         break;
 
       case 1:
+        widget = const TimerHome();
+        break;
+
+      default:
         widget = const Pomodoro(
           breakTime: '0',
           workSessions: '4',
           workTime: '25',
         );
         break;
-
-      default:
-        widget = const FastingTimer();
     }
     return widget;
   }

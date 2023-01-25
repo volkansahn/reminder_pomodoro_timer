@@ -287,6 +287,7 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 height: 20.0,
               ),
               myButton(
+                color: Colors.blue,
                 label: "Add Reminder",
                 onTap: () {
                   _addRemindertoDB();
@@ -336,8 +337,6 @@ class _AddTaskPageState extends State<AddTaskPage> {
   }
 
   _addRemindertoDB() async {
-    print("interval");
-    print(intervalTime);
     final _selectedDt = DateTime(_userPickedDate.year, _userPickedDate.month,
         _userPickedDate.day, _userPickedTime.hour, _userPickedTime.minute);
     final _format = new DateFormat('yyyy-MM-dd').add_jm();
