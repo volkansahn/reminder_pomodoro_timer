@@ -15,6 +15,13 @@ class _HomePageState extends State<HomePage> {
   int index = 0;
   @override
   Widget build(BuildContext context) {
+    //Version 1.0
+    return Scaffold(
+      backgroundColor: context.theme.backgroundColor,
+      body: ReminderPage(),
+    );
+    // Version 2.0
+    /*
     return Scaffold(
       backgroundColor: context.theme.backgroundColor,
       bottomNavigationBar: BottomNavigationBar(
@@ -40,6 +47,7 @@ class _HomePageState extends State<HomePage> {
         child: getSelectedWidget(index: index),
       ),
     );
+    */
   }
 
   getSelectedWidget({required int index}) {
