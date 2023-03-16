@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../helpers/theme.dart';
+
 class CircularDropDownMenu extends StatefulWidget {
   final String hintText;
   final List<DropdownMenuItem> dropDownMenuItem;
@@ -17,9 +19,8 @@ class _CircularDropDownMenuState extends State<CircularDropDownMenu> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width,
       height: 50,
-      margin: EdgeInsets.only(top: 16),
+      width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
         shape: BoxShape.rectangle,
@@ -37,9 +38,7 @@ class _CircularDropDownMenuState extends State<CircularDropDownMenu> {
             padding: EdgeInsets.only(left: 12),
             child: Text(
               widget.hintText,
-              style: TextStyle(
-                fontFamily: 'Muli',
-              ),
+              style: inputTextStyle,
             ),
           ),
         ),

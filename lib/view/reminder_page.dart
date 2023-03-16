@@ -31,6 +31,7 @@ class _ReminderPageState extends State<ReminderPage> {
   DateTime _selectedDate = DateTime.now();
   final _reminderController = Get.put(ReminderController());
   var isWaterReminderAdded = false;
+  bool isFilterMenuOpen = false;
 
   @override
   void initState() {
@@ -52,11 +53,54 @@ class _ReminderPageState extends State<ReminderPage> {
       backgroundColor: context.theme.backgroundColor,
       body: Column(
         children: [
-          _addBar(),
-          _addDateBar(),
-          _showWaterReminder(),
-          SizedBox(height: 10),
-          _showReminders()
+          if (isFilterMenuOpen) ...[
+            Container(
+              margin: EdgeInsets.only(right: 20, left: 20, top: 10),
+              child: Row(
+                children: [
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'by Time',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Get.isDarkMode ? Colors.black : Colors.white),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: context.theme.hintColor,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  OutlinedButton(
+                    onPressed: () {},
+                    child: Text(
+                      'by Group',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Get.isDarkMode ? Colors.black : Colors.white,
+                      ),
+                    ),
+                    style: OutlinedButton.styleFrom(
+                      backgroundColor: context.theme.hintColor,
+                      shape: StadiumBorder(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            _addBar(),
+            _addDateBar(),
+            _showWaterReminder(),
+            _showReminders()
+          ] else ...[
+            _addBar(),
+            _addDateBar(),
+            _showWaterReminder(),
+            _showReminders()
+          ]
         ],
       ),
     );
@@ -210,7 +254,7 @@ class _ReminderPageState extends State<ReminderPage> {
       padding: EdgeInsets.symmetric(horizontal: 20),
       width: MediaQuery.of(context).size.width,
       height: 80,
-      margin: EdgeInsets.only(right: 20, left: 20, top: 20, bottom: 20),
+      margin: EdgeInsets.only(right: 20, left: 20, top: 10, bottom: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16),
         color: Colors.amber,
@@ -259,7 +303,7 @@ class _ReminderPageState extends State<ReminderPage> {
         selectedTextColor: Colors.white,
         dateTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
-              fontSize: 20.0, fontWeight: FontWeight.w600, color: Colors.grey),
+              fontSize: 16.0, fontWeight: FontWeight.w600, color: Colors.grey),
         ),
         dayTextStyle: GoogleFonts.lato(
           textStyle: TextStyle(
@@ -280,7 +324,7 @@ class _ReminderPageState extends State<ReminderPage> {
 
   Container _addBar() {
     return Container(
-      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 20.0),
+      margin: EdgeInsets.only(right: 20.0, left: 20.0, top: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -318,6 +362,19 @@ class _ReminderPageState extends State<ReminderPage> {
       ),
       elevation: 0,
       backgroundColor: context.theme.backgroundColor,
+      automaticallyImplyLeading: false,
+      leading: GestureDetector(
+        onTap: () {
+          setState(() {
+            isFilterMenuOpen = !isFilterMenuOpen;
+          });
+        },
+        child: Icon(
+          Icons.sort_rounded,
+          size: 40.0,
+          color: Get.isDarkMode ? Colors.white : Colors.black,
+        ),
+      ),
       actions: [
         GestureDetector(
           child: Icon(

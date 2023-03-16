@@ -3,10 +3,12 @@ class Reminder {
   String? title;
   String? reminder;
   String? date;
+  String? time;
   String? remindBefore;
   String? label;
   int? interval;
-  int? color;
+  int? firstColor;
+  int? secondColor;
   int? isReminded;
 
   Reminder({
@@ -14,10 +16,12 @@ class Reminder {
     this.title,
     this.reminder,
     this.date,
+    this.time,
     this.remindBefore,
     this.label,
     this.interval,
-    this.color,
+    this.firstColor,
+    this.secondColor,
     this.isReminded,
   });
 
@@ -26,10 +30,12 @@ class Reminder {
     title = json['title'];
     reminder = json['reminder'];
     date = json['date'];
+    time = json['time'];
     remindBefore = json['remindBefore'];
     interval = json['interval'];
     label = json['label'];
-    color = json['color'];
+    firstColor = json['firstColor'];
+    secondColor = json['secondColor'];
     isReminded = json['isReminded'];
   }
 
@@ -39,10 +45,12 @@ class Reminder {
     data['title'] = this.title;
     data['reminder'] = this.reminder;
     data['date'] = this.date;
+    data['time'] = this.time;
     data['remindBefore'] = this.remindBefore;
     data['interval'] = this.interval;
     data['label'] = this.label;
-    data['color'] = this.color;
+    data['firstColor'] = this.firstColor;
+    data['secondColor'] = this.secondColor;
     data['isReminded'] = this.isReminded;
     return data;
   }

@@ -62,7 +62,7 @@ class _AddWaterState extends State<AddWater> {
       backgroundColor: context.theme.backgroundColor,
       title: Text(
         "Add Water",
-        style: TextStyle(color: Get.isDarkMode ? Colors.white : Colors.black),
+        style: titleStyle,
       ),
       leading: GestureDetector(
         onTap: () {
@@ -94,7 +94,8 @@ class _AddWaterState extends State<AddWater> {
           "$drinkedWater / $goalValue",
           style: titleStyle,
         ),
-        progressColor: Colors.blue,
+        linearGradient:
+            LinearGradient(colors: [Colors.blue[500]!, Colors.blue[200]!]),
       ),
     );
   }
@@ -176,8 +177,23 @@ class _AddWaterState extends State<AddWater> {
                 },
                 buttons: ["200", "300", "500", "1000"],
                 options: GroupButtonOptions(
+                  elevation: 20,
                   selectedTextStyle: subHeadingStyle,
                   unselectedTextStyle: subHeadingStyle,
+                  unselectedShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        offset: Offset(5, 5),
+                        spreadRadius: 0.2,
+                        blurRadius: 5)
+                  ],
+                  selectedShadow: [
+                    BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        offset: Offset(5, 5),
+                        spreadRadius: 0.2,
+                        blurRadius: 5)
+                  ],
                 ),
               ),
               SizedBox(
@@ -251,7 +267,10 @@ class _AddWaterState extends State<AddWater> {
             height: 20,
           ),
           ElevatedButton(
-            style: ButtonStyle(),
+            style: ElevatedButton.styleFrom(
+              shadowColor: Colors.lightBlue,
+              elevation: 5,
+            ),
             onPressed: () {
               var totalAmount = widget.waterReminder!.totalDrink!;
               totalAmount += addAmount;

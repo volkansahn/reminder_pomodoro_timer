@@ -28,44 +28,54 @@ class _InputFieldState extends State<InputField> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 16),
+      padding: EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        color: Colors.grey[200],
+      ),
+      margin: EdgeInsets.only(top: 10, bottom: 10),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            widget.title,
-            style: titleStyle,
-          ),
+          widget.widget == null
+              ? Text(
+                  widget.title,
+                  style: inputTitleStyle,
+                )
+              : Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      widget.title,
+                      style: inputTitleStyle,
+                    ),
+                    Container(child: widget.widget),
+                  ],
+                ),
           Container(
-            margin: EdgeInsets.only(top: 8.0),
+            margin: EdgeInsets.only(top: 5.0),
             child: Row(
               children: [
                 Expanded(
                   child: widget.isEditable == true
                       ? TextField(
+                          style: inputTextStyle,
                           controller: widget.controller,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
-                            hintText: widget.hint,
-                          ),
+                          autocorrect: false,
+                          maxLines: 2,
+                          minLines: 1,
                         )
                       : TextField(
+                          style: inputTextStyle,
                           onTap: widget.onTap,
                           readOnly: true,
                           controller: widget.controller,
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12.0),
-                            ),
+                          decoration: InputDecoration.collapsed(
                             hintText: widget.hint,
+                            hintStyle: inputTextStyle,
                           ),
                         ),
                 ),
-                widget.widget == null
-                    ? Container()
-                    : Container(child: widget.widget),
               ],
             ),
           ),

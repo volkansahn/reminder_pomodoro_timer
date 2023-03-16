@@ -43,3 +43,21 @@ TextStyle get titleStyle {
     color: Get.isDarkMode ? Colors.white : Colors.black,
   ));
 }
+
+TextStyle get inputTitleStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontSize: 18.0,
+    fontWeight: FontWeight.w900,
+    color: Get.isDarkMode ? Colors.white : Colors.grey[700],
+  ));
+}
+
+TextStyle get inputTextStyle {
+  return GoogleFonts.lato(
+      textStyle: TextStyle(
+    fontSize: 24.0,
+    fontWeight: FontWeight.bold,
+    color: Get.isDarkMode ? Colors.white : Colors.black,
+  ));
+}

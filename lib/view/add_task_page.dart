@@ -30,10 +30,11 @@ class _AddTaskPageState extends State<AddTaskPage> {
   String _reminderTime = DateFormat.jm().format(DateTime.now());
   String _remindBeforeTime = "None";
   String _repeatTime = "None";
+  String _category = "General";
   int intervalTime = 0;
   bool isRemindBefore = false;
   bool isRepeat = false;
-  Color mycolor = Colors.blue;
+  List<Color> selectedCategoryColors = [Colors.blue[200]!, Colors.blue[400]!];
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +51,9 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 "Add Reminder",
                 style: headingStyle,
               ),
+              SizedBox(
+                height: 20,
+              ),
               InputField(
                 isEditable: true,
                 title: "Title",
@@ -57,237 +61,212 @@ class _AddTaskPageState extends State<AddTaskPage> {
                 controller: _titleController,
               ),
               InputField(
-                  isEditable: true,
-                  title: "Reminder",
-                  hint: "Add Reminder",
-                  controller: _reminderTextController),
-              InputField(
-                isEditable: false,
-                onTap: (() {
-                  _getDateFromUser(context);
-                }),
-                title: "Date",
-                hint: DateFormat.yMd().format(_selectedDate),
-                widget: IconButton(
-                  icon: Icon(Icons.calendar_today_outlined),
-                  onPressed: () {
-                    _getDateFromUser(context);
-                  },
-                ),
+                isEditable: true,
+                title: "Reminder",
+                hint: "Add Reminder",
+                controller: _reminderTextController,
               ),
-              InputField(
-                isEditable: false,
-                onTap: () {
-                  _getTimeFromUser();
-                },
-                title: "Time",
-                hint: _reminderTime,
-                widget: IconButton(
-                  icon: Icon(Icons.access_alarm),
-                  onPressed: () {
-                    _getTimeFromUser();
-                  },
-                ),
+              Row(
+                children: [
+                  Expanded(
+                    child: InputField(
+                      isEditable: false,
+                      onTap: (() {
+                        _getDateFromUser(context);
+                      }),
+                      title: "Date",
+                      hint: DateFormat.yMd().format(_selectedDate),
+                      widget: IconButton(
+                        icon: Icon(Icons.calendar_today_outlined),
+                        onPressed: () {
+                          _getDateFromUser(context);
+                        },
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  Expanded(
+                    child: InputField(
+                      isEditable: false,
+                      onTap: () {
+                        _getTimeFromUser();
+                      },
+                      title: "Time",
+                      hint: _reminderTime,
+                      widget: IconButton(
+                        icon: Icon(Icons.access_alarm),
+                        onPressed: () {
+                          _getTimeFromUser();
+                        },
+                      ),
+                    ),
+                  ),
+                ],
               ),
               Container(
-                margin: EdgeInsets.only(top: 16),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Remind Before",
-                        style: titleStyle,
-                      ),
-                      Switch(
-                        // This bool value toggles the switch.
-                        value: isRemindBefore,
-                        activeColor: Colors.green,
-                        onChanged: (bool value) {
-                          // This is called when the user toggles the switch.
+                width: double.infinity,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.grey[200],
+                ),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Remind Before",
+                      style: inputTitleStyle,
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: DropdownButton(
+                        value: _remindBeforeTime,
+                        items: ["None", "5 Min", "15 Min", "30 Min", "1 Hour"]
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: inputTextStyle,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
                           setState(() {
-                            isRemindBefore = value;
+                            _remindBeforeTime = newValue!;
                           });
                         },
                       ),
-                    ]),
-              ),
-              if (!isRemindBefore) ...[
-                Container(),
-              ] else ...[
-                CircularDropDownMenu(
-                  dropDownMenuItem: [
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text("5 min"),
-                      ),
-                      value: "5 min",
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text("10 min"),
-                      ),
-                      value: "10 min",
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text("15 min"),
-                      ),
-                      value: "15 min",
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: Text("30 min"),
-                      ),
-                      value: "30 min",
-                    ),
+                    )
                   ],
-                  onChanged: (value) {
-                    setState(() {
-                      _remindBeforeTime = value;
-                    });
-                  },
-                  hintText: _remindBeforeTime,
                 ),
-              ],
+              ),
               Container(
-                margin: EdgeInsets.only(top: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                width: double.infinity,
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.grey[200],
+                ),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       "Repeat",
-                      style: titleStyle,
+                      style: inputTitleStyle,
                     ),
-                    Switch(
-                      // This bool value toggles the switch.
-                      value: isRepeat,
-                      activeColor: Colors.green,
-                      onChanged: (bool value) {
-                        // This is called when the user toggles the switch.
-                        setState(() {
-                          isRepeat = value;
-                        });
-                      },
+                    SizedBox(
+                      height: 20,
                     ),
+                    Container(
+                      child: DropdownButton(
+                        value: _repeatTime,
+                        items: ["None", "Every Day", "Every Week", "Every Year"]
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: inputTextStyle,
+                            ),
+                          );
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _repeatTime = newValue!;
+                          });
+                        },
+                      ),
+                    )
                   ],
                 ),
               ),
-              if (!isRepeat) ...[
-                Container(),
-              ] else ...[
-                CircularDropDownMenu(
-                  dropDownMenuItem: [
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _repeatTime = "None";
-                          });
-                        },
-                        child: Text("None"),
-                      ),
-                      value: 0,
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _repeatTime = "Every Day";
-                          });
-                        },
-                        child: Text("Every Day"),
-                      ),
-                      value: 1,
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _repeatTime = "Every Week";
-                          });
-                        },
-                        child: Text("Every Week"),
-                      ),
-                      value: 7,
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _repeatTime = "Every Month";
-                          });
-                        },
-                        child: Text("Every Month"),
-                      ),
-                      value: 30,
-                    ),
-                    DropdownMenuItem(
-                      child: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            _repeatTime = "Every Year";
-                          });
-                        },
-                        child: Text("Every Year"),
-                      ),
-                      value: 365,
-                    ),
-                  ],
-                  onChanged: (value) {
-                    setState(() {
-                      intervalTime = value;
-                    });
-                  },
-                  hintText: _repeatTime,
+              Container(
+                padding: EdgeInsets.all(15),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: Colors.grey[200],
                 ),
-              ],
-              InputField(
-                isEditable: true,
-                title: "Label",
-                hint: "Add Label",
-                controller: _labelController,
-                widget: IconButton(
-                  icon: CircleAvatar(radius: 12, backgroundColor: mycolor),
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Pick a color!'),
-                            content: SingleChildScrollView(
-                              child: BlockPicker(
-                                pickerColor: mycolor, //default color
-                                onColorChanged: (Color color) {
-                                  //on color picked
-                                  setState(() {
-                                    mycolor = color;
-                                  });
-                                },
-                              ),
+                margin: EdgeInsets.only(top: 10, bottom: 10),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "Category",
+                          style: inputTitleStyle,
+                        ),
+                        CircleAvatar(
+                            radius: 12,
+                            backgroundColor: selectedCategoryColors[1]),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      child: DropdownButton(
+                        value: _category,
+                        items: ["General", "Shopping", "Birthday", "Pills"]
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: inputTextStyle,
                             ),
-                            actions: <Widget>[
-                              ElevatedButton(
-                                child: const Text('DONE'),
-                                onPressed: () {
-                                  Navigator.of(context)
-                                      .pop(); //dismiss the color picker
-                                },
-                              ),
-                            ],
                           );
-                        });
-                  },
+                        }).toList(),
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            _category = newValue!;
+                            switch (_category) {
+                              case "General":
+                                selectedCategoryColors = [
+                                  Colors.blue[200]!,
+                                  Colors.blue[400]!
+                                ];
+                                break;
+                              case "Shopping":
+                                selectedCategoryColors = [
+                                  Colors.amber[200]!,
+                                  Colors.amber[400]!
+                                ];
+                                break;
+                              case "Birthday":
+                                selectedCategoryColors = [
+                                  Colors.green[200]!,
+                                  Colors.green[400]!
+                                ];
+                                break;
+                              case "Pills":
+                                selectedCategoryColors = [
+                                  Colors.blueGrey[200]!,
+                                  Colors.blueGrey[400]!
+                                ];
+                                break;
+                              default:
+                            }
+                          });
+                        },
+                      ),
+                    )
+                  ],
                 ),
               ),
               SizedBox(
                 height: 20.0,
               ),
               myButton(
-                color: Colors.blue,
+                color: selectedCategoryColors[1],
                 label: "Add Reminder",
                 onTap: () {
                   _addRemindertoDB();
@@ -346,10 +325,12 @@ class _AddTaskPageState extends State<AddTaskPage> {
         title: _titleController.text,
         reminder: _reminderTextController.text,
         date: _format.format(_selectedDt),
+        time: _reminderTime,
         remindBefore: _remindBeforeTime,
         interval: intervalTime,
         label: _labelController.text,
-        color: mycolor.value,
+        firstColor: selectedCategoryColors[0].value,
+        secondColor: selectedCategoryColors[1].value,
         isReminded: 0,
       ),
     );
